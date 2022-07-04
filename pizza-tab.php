@@ -37,7 +37,8 @@ class U_Pizza_Install {
 
     protected static $instance = null;
 
-    public static function instance() {
+    public static function instance() 
+    {
 
         if ( is_null( self::$instance ) ) {
             self::$instance = new self();
@@ -47,12 +48,15 @@ class U_Pizza_Install {
 
     }
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->include();
     }
 
-    public function include() {
+    public function include() 
+    {
 
+        require_once U_PIZZA_PATH . 'includes/pizza-functions.php';
         require_once U_PIZZA_PATH . 'includes/pizza.php';
         U_Pizza::instance();
 
