@@ -43,7 +43,6 @@ echo '</pre>';
                                 <div class="group-image">
                                     <img src="<?= esc_attr($group['image']) ?>" alt="">
                                     <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][image]" value="<?= esc_attr($group['image']) ?>">
-
                                     <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][imageId]" value="<?= esc_attr($group['imageId']) ?>">
                                 </div>
                             </div>
