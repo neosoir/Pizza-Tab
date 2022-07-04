@@ -56,7 +56,7 @@ class U_Pizza {
                 $componet['visible']     = 1;
             }
         }
-        update_option( 'u_pizza_data',  $_POST['pizza_data'] );
+        update_option( 'u_pizza_data',  wc_clean( $_POST['pizza_data'] ) );
         
     }
 
@@ -75,6 +75,7 @@ class U_Pizza {
 
         if (isset($_GET['tab']) && $_GET['tab'] === 'u_pizza') {
 
+            wp_enqueue_media();
             wp_enqueue_style( 'pizza-admin', plugins_url('assets/css/admin.min.css', U_PIZZA_DIR), [], time(), 'all' );
             wp_enqueue_script( 'pizza-admin-settings', plugins_url('assets/js/adminPizzaSettings.js', U_PIZZA_DIR), ['jquery'], time(), true );
 

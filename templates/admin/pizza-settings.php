@@ -64,7 +64,7 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
                                     <div class="component-body">
                                         <div class="component-img">
                                             <img src="<?= esc_attr(wp_get_attachment_image_url($component['imageId'], 'medium')) ?>" alt="">
-                                            <!-- <img src="<?= esc_attr($component['image']) ?>" alt=""> -->
+                                            <img src="<?= esc_attr($component['image']) ?>" alt="">
                                         </div>
                                     </div>
                                     <div class="component-body-collapse">
@@ -82,7 +82,7 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
                                         </div>
                                         <div class="form-group-full component-image">
                                             <img src="<?= esc_url(wp_get_attachment_image_url($component['imageId'], 'medium')) ?>" alt="">
-                                            <!-- <img src="<?= esc_attr($component['image']) ?>" alt=""> -->
+                                            <img src="<?= esc_attr($component['image']) ?>" alt="">
                                             <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][components][<?= esc_attr($component['id']) ?>][image]" value="<?= esc_attr($component['image']) ?>">
                                             <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][components][<?= esc_attr($component['id']) ?>][imageId]" value="<?= esc_attr($component['imageId']) ?>">
                                         </div>
