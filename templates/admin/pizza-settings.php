@@ -5,11 +5,10 @@ $pizza_data = get_option('u_pizza_data') ? get_option('u_pizza_data') : u_pizza_
 $pizza_components = array_merge(...wp_list_pluck($pizza_data, 'components'));
 $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
 
-// echo "<pre>";
-// print_r($pizza_data);
-
-// print_r(u_flatten_array(wp_list_pluck($pizza_data, 'components')));
-// echo '</pre>';
+echo "<pre>";
+print_r($pizza_data);
+//print_r(u_flatten_array(wp_list_pluck($pizza_data, 'components')));
+echo '</pre>';
 
 
 ?>
@@ -57,7 +56,6 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
                                             <span><?= esc_html($component['name']) ?></span>
                                             <span><?= wc_price($component['price']) ?></span>
                                             <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][components][<?= esc_attr($component['id']) ?>][id]" value="<?= esc_attr($component['id']) ?>">
-
                                         </div>
                                         <div class="component-actions">
                                             <span class="dashicons dashicons-edit edit-component"></span>
@@ -88,12 +86,9 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
                                             <!-- <img src="<?= esc_attr($component['image']) ?>" alt=""> -->
                                             <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][components][<?= esc_attr($component['id']) ?>][image]" value="<?= esc_attr($component['image']) ?>">
                                             <input type="hidden" name="pizza_data[<?= esc_attr($group['id']) ?>][components][<?= esc_attr($component['id']) ?>][imageId]" value="<?= esc_attr($component['imageId']) ?>">
-
                                         </div>
                                         <div class="form-group-full">
-                                            <textarea name="pizza_data[<?= esc_attr($group['id']); ?>][components][<?= esc_attr($component['id']); ?>][description]" id="" cols="30" rows="10">
-                                                <?= esc_attr(trim($component['description'])) ?>
-                                            </textarea>
+                                            <textarea name="pizza_data[<?= esc_attr($group['id']); ?>][components][<?= esc_attr($component['id']); ?>][description]" id="" cols="30" rows="10"><?= esc_attr(trim($component['description'])) ?></textarea>
                                         </div>
                                         <div class="form-group-full">
                                             <input type="checkbox" name="pizza_data[<?= esc_attr($group['id']) ?>][components][<?= esc_attr($component['id']) ?>][meta]" <?= checked($component['meta'], 1) ?>>

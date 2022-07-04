@@ -35,14 +35,24 @@ class U_Pizza {
 
     public function update_woo_settings()
     {
-        if  (   ( emty( $_POST( '_pizzanonce' ) ) ) ||
-                ( ! wp_verify_nonce( $_POST['_pizzanonce'], 'u_pizza_settings' ) )
+        if  (   ( empty( $_POST['_pizzanonce'] ) ) ||
+                ( ! wp_verify_nonce( $_POST['_pizzanonce'], 'u_pizza_woo_settings' ) )
             ) 
         {
             return;
         }
 
         update_option( 'u_pizza_data',  $_POST['pizza_data'] );
+    }
+
+    public function modify_default_data( $data )
+    {
+        $data[] = [
+            'id'            => 3,
+            'group_name'    => 'Group 3',
+        ];
+
+        return $data;
     }
 
 }
