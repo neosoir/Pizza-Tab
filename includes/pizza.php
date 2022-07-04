@@ -72,16 +72,12 @@ class U_Pizza {
 
     public function admin_scripts() 
     {
-        wp_register_style(
-            'pizza-admin', 
-            plugins_url('assets/css/admin.min.css', U_PIZZA_PATH ), 
-            [],
-            time(),
-            'all'
-        );
 
-        if ( ( isset( $_GET['tab'] ) ) && ( $_GET['tab'] === 'u_pizza' ) ) {
-            wp_enqueue_style('pizza-admin');
+        if (isset($_GET['tab']) && $_GET['tab'] === 'u_pizza') {
+
+            wp_enqueue_style( 'pizza-admin', plugins_url('assets/css/admin.min.css', U_PIZZA_DIR), [], time(), 'all' );
+            wp_enqueue_script( 'pizza-admin-settings', plugins_url('assets/js/adminPizzaSettings.js', U_PIZZA_DIR), ['jquery'], time(), true );
+
         }
     }
 
