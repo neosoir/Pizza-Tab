@@ -5,10 +5,10 @@ $pizza_data = get_option('u_pizza_data') ? get_option('u_pizza_data') : u_pizza_
 $pizza_components = array_merge(...wp_list_pluck($pizza_data, 'components'));
 $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
 
-//echo "<pre>";
-//print_r($pizza_data);
-////print_r(u_flatten_array(wp_list_pluck($pizza_data, 'components')));
-//echo '</pre>';
+echo "<pre>";
+print_r($pizza_data);
+//print_r(u_flatten_array(wp_list_pluck($pizza_data, 'components')));
+echo '</pre>';
 
 
 ?>
@@ -23,6 +23,7 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
     ]);
     ?>
     <div class="wc-metaboxes-wrapper">
+        <!-- Get Groups -->
         <div class="wc-metaboxes">
             <?php foreach ($pizza_data as $group) : ?>
                 <div class="wc-metabox closed" data-index="<?= esc_attr($group['id']) ?>">
@@ -47,6 +48,7 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
                                 </div>
                             </div>
                         </div>
+                         <!-- Get Components -->
                         <div class="group-components">
                             <?php foreach ($group['components'] as $component) : ?>
                                 <div class="group-component">
@@ -116,7 +118,7 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
     <?php wp_nonce_field('u_pizza_woo_settings', '_pizzanonce'); ?>
 </div>
 
-<!-- Use wp.templete -->
+<!-- Use wp.templete to add Groups -->
 <script type="text/html" id="tmpl-pizza-group">
     <div class="wc-metabox closed" data-index="{{{data.index}}}">
         <h3>
@@ -152,7 +154,8 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
     </div>
 </script>
 
-<!--- <script type="text/html" id="tmpl-pizza-component">
+<!-- Use wp.templete to add Components -->
+<script type="text/html" id="tmpl-pizza-component">
     <div class="group-component">
         <div class="component-header">
             <div class="component-details">
@@ -203,4 +206,4 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
             </div>
         </div>
     </div>
-</script> -->
+</script>
