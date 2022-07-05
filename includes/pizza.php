@@ -36,7 +36,7 @@ class U_Pizza {
         add_filter('product_type_options', [$this, 'woo_type_options']);
         add_filter('woocommerce_product_data_tabs',  [$this, 'woo_set_pizza_tabs']);
         add_action('woocommerce_product_data_panels', [$this, 'woo_add_product_pizza_fields']);
-        //add_action('woocommerce_process_product_meta',  [$this, 'woo_save_data'], 10, 2);
+        add_action('woocommerce_process_product_meta',  [$this, 'woo_save_data'], 10, 2);
 
     }
 
@@ -116,7 +116,7 @@ class U_Pizza {
     }
 
     /**
-     * Add new product type
+     * Add new product type.
      */
     public function add_product_types( $types )
     {
@@ -126,7 +126,7 @@ class U_Pizza {
     }
 
     /**
-     * Display price for a new product
+     * Display price for a new product.
      */
     public function display_prices_for_footer()
     {
@@ -145,7 +145,7 @@ class U_Pizza {
     }
 
     /**
-     * 
+     * Add checkbox to pizza settings.
      */
     public function woo_type_options( $options )
     {
@@ -160,7 +160,7 @@ class U_Pizza {
     }
 
     /**
-     * 
+     * Add space to pizza setting.
      */
     public function woo_set_pizza_tabs($tabs)
     {
@@ -175,10 +175,18 @@ class U_Pizza {
     }
 
     /**
-     * 
+     * Get the content of pizza settings
      */
     public function woo_add_product_pizza_fields()
     {
         require_once U_PIZZA_PATH . 'templates/admin/pizza-product.php';
+    }
+
+    /**
+     * Update data of pizza settings
+     */
+    public function woo_save_data($post_id, $post)
+    {
+        update_post_meta($post_id, '_u_pizza', isset($_POST['_u_pizza']) ? 'yes' : 'no');
     }
 }
