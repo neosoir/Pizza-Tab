@@ -103,15 +103,21 @@ class U_Pizza {
      */
     public function admin_scripts() 
     {
+        global $post;
+        wp_register_style( 'pizza-admin', plugins_url('assets/css/admin.min.css', U_PIZZA_DIR), [], time(), 'all' );
 
-        if (isset($_GET['tab']) && $_GET['tab'] === 'u_pizza') {
+        if (isset( $_GET['tab']) && $_GET['tab'] === 'u_pizza' ) {
 
             wp_enqueue_media();
-            wp_enqueue_style( 'pizza-admin', plugins_url('assets/css/admin.min.css', U_PIZZA_DIR), [], time(), 'all' );
+            wp_enqueue_style( 'pizza-admin' );
             wp_enqueue_script( 'pizza-admin-settings', plugins_url('assets/js/adminPizzaSettings.js', U_PIZZA_DIR), ['jquery'], time(), true );
             wp_localize_script('pizza-admin-settings', 'U_PIZZA_DATA', [
-                'url' => plugins_url('/assets/', U_PIZZA_DIR),
+                'url' => plugins_url( '/assets/', U_PIZZA_DIR ),
             ]);
+        }
+        if ( $post->post_type === 'product' ) {
+            wp_enqueue_media();
+            wp_enqueue_style( 'pizza-admin' );
         }
     }
 
