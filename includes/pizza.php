@@ -114,7 +114,8 @@ class U_Pizza {
      */
     public function add_product_types( $types )
     {
-        $types['u_pizza'] = esc_html('U Pizza', 'u-pizza');
+        $types['u_pizza']           = esc_html('U Pizza Simple', 'u-pizza');
+        //$types['u_pizza_variable']  = esc_html('U Pizza Varible', 'u-pizza');
         return $types;
     }
 
@@ -131,7 +132,7 @@ class U_Pizza {
         ?>
         <script>
             jQuery(document).ready(function() {
-                jQuery.('#general_product_data .pricing').addClass('show_if_u_pizza');
+                jQuery('#general_product_data .pricing').addClass('show_if_u_pizza');
             })
         </script>
         <?php
