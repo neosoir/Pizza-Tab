@@ -17,24 +17,43 @@ class U_Pizza {
 
     public function __construct() 
     {
+        // Add new tab in woocommerce settings
         add_filter( 'woocommerce_settings_tabs_array', [$this, 'add_settings_tab'], 50 );
         add_action( 'woocommerce_settings_u_pizza', [$this, 'settings_page'] );
         add_action( 'woocommerce_update_options_u_pizza', [$this, 'update_woo_settings'] );
+        
+        // Add custon data filter
         //add_filter( 'u_pizza_default_data', [$this, 'modify_default_data'] );
+        
+        // Add admin assets
         add_action( 'admin_enqueue_scripts', [$this, 'admin_scripts'] );
+
+        // Add new product type
+        add_filter('product_type_selector', [$this, 'add_product_types']);
+        add_action( 'admin_footer', [$this, 'display_prices_for_footer'] );
+
     }
 
+    /**
+     * Add new tab in wocoommerce settings.
+     */
     public function add_settings_tab( $settings_tabs )
     {
         $settings_tabs['u_pizza'] = esc_html__( 'Pizza', 'u_pizza' );
         return $settings_tabs;
     }
 
+    /**
+     * Get the content of settings page.
+     */
     public function settings_page()
     {
         require_once U_PIZZA_PATH . 'templates/admin/pizza-settings.php';
     }
 
+    /**
+     * Save the data of settings page.
+     */
     public function update_woo_settings()
     {
         if  (   ( empty( $_POST['_pizzanonce'] ) ) ||
@@ -60,6 +79,9 @@ class U_Pizza {
         
     }
 
+    /**
+     * Add custon data filter
+     */
     public function modify_default_data( $data )
     {
         $data[] = [
@@ -70,6 +92,9 @@ class U_Pizza {
         return $data;
     }
 
+    /**
+     * Add admin settings files.
+     */
     public function admin_scripts() 
     {
 
@@ -84,4 +109,31 @@ class U_Pizza {
         }
     }
 
+    /**
+     * Add new product type
+     */
+    public function add_product_types( $types )
+    {
+        $types['u_pizza'] = esc_html('U Pizza', 'u-pizza');
+        return $types;
+    }
+
+    /**
+     * Display price for a new product
+     */
+    public function display_prices_for_footer()
+    {
+        global $post;
+        if ( $post->post_type !== 'product' ) {
+            return;
+        }
+
+        ?>
+        <script>
+            jQuery(document).ready(function() {
+                jQuery.('#general_product_data .pricing').addClass('show_if_u_pizza');
+            })
+        </script>
+        <?php
+    }
 }
