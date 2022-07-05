@@ -56,7 +56,7 @@ class U_Pizza_Install {
     public function include() 
     {
 
-        require_once U_PIZZA_PATH . 'includes/u-pizza-product.php';
+        //require_once U_PIZZA_PATH . 'includes/u-pizza-product.php';
         require_once U_PIZZA_PATH . 'includes/pizza-functions.php';
         require_once U_PIZZA_PATH . 'includes/pizza.php';
         U_Pizza::instance();

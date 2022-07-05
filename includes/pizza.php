@@ -29,8 +29,11 @@ class U_Pizza {
         add_action( 'admin_enqueue_scripts', [$this, 'admin_scripts'] );
 
         // Add new product type
-        add_filter('product_type_selector', [$this, 'add_product_types']);
-        add_action( 'admin_footer', [$this, 'display_prices_for_footer'] );
+        //add_filter('product_type_selector', [$this, 'add_product_types']);
+        //add_action( 'admin_footer', [$this, 'display_prices_for_footer'] );
+
+        // Add checkbox in porduct type
+        add_filter('product_type_options', [$this, 'woo_type_options']);
 
     }
 
@@ -115,7 +118,7 @@ class U_Pizza {
     public function add_product_types( $types )
     {
         $types['u_pizza']           = esc_html('U Pizza Simple', 'u-pizza');
-        //$types['u_pizza_variable']  = esc_html('U Pizza Varible', 'u-pizza');
+        $types['u_pizza_variable']  = esc_html('U Pizza Varible', 'u-pizza');
         return $types;
     }
 
@@ -136,5 +139,20 @@ class U_Pizza {
             })
         </script>
         <?php
+    }
+
+    /**
+     * 
+     */
+    public function woo_type_options( $options )
+    {
+        $options['u_pizza'] = [
+            'id'                =>  '_u_pizza',
+            'wrapper_class'     =>  'show_if_simple show_if_variable',
+            'label'             =>  esc_html__('Pizza', 'u-pizza'),
+            'default'           =>  'no'
+        ];
+
+        return $options;
     }
 }
