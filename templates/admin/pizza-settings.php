@@ -112,11 +112,12 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
         </div>
     </div>
 
-
+    <!-- Security -->
     <?php wp_nonce_field('u_pizza_woo_settings', '_pizzanonce'); ?>
 </div>
 
-<!-- <script type="text/html" id="tmpl-pizza-group">
+<!-- Use wp.templete -->
+<script type="text/html" id="tmpl-pizza-group">
     <div class="wc-metabox closed" data-index="{{{data.index}}}">
         <h3>
             <button type="button" class="remove-group button"><?php esc_html_e('Remove group', 'u-pizza'); ?></button>
@@ -151,7 +152,7 @@ $pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
     </div>
 </script>
 
-<script type="text/html" id="tmpl-pizza-component">
+<!--- <script type="text/html" id="tmpl-pizza-component">
     <div class="group-component">
         <div class="component-header">
             <div class="component-details">

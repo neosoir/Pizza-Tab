@@ -1,5 +1,6 @@
 (function ($) {
   
+    // Functions to add Principal image
     const uploadGroupImage = (ele) => {
 
         // Create a new media frame
@@ -24,6 +25,7 @@
 
     }
 
+    // Functions to add Secondary image
     const uploadComponentImage = (el) => {
 
         // Create a new media frame
@@ -48,7 +50,7 @@
 
     }
 
-
+    // Principal function to manipulate Groups and components.
     $("#u-pizza-settings").on("click", ".edit-component", function () {
         if ($(this).is(".active")) {
             $(this)
@@ -71,6 +73,53 @@
     })
     .on('click', '.component-image', function() {
         uploadComponentImage( $(this) );
+    })
+    .on("click", ".add-group", function () {
+        let index = $(".wc-metabox").length + 1;
+        const template = wp.template("pizza-group");
+        const dataGroup = {
+            index: index,
+            id: {
+                name: `pizza_data[${index}][id]`,
+            },
+            name: {
+                name: `pizza_data[${index}][group_name]`,
+            },
+            image: {
+                name: `pizza_data[${index}][image]`,
+                value: U_PIZZA_DATA.url + "images/placeholder.svg",
+            },
+            imageId: {
+                name: `pizza_data[${index}][imageId]`,
+            },
+        };
+        $(".wc-metaboxes").append(template(dataGroup));
+    })
+    .on("click", ".remove-group", function () {
+        const answer = confirm("Do you want to remove group?");
+
+        if (answer) {
+            let groupContainer = $(this).closest(".wc-metabox");
+
+            $(groupContainer).remove();
+        }
+        $(".wc-metabox").each(function (index, el) {
+            let _index = index + 1;
+
+            $(this)
+            .find("input, textarea")
+            .prop("name", function (i, val) {
+                let fieldName = val.replace(
+                /pizza_data[[0-9]+\]/g,
+                "pizza_data[" + _index + "]"
+                );
+
+                return fieldName;
+            });
+            $(this).find('h3 > input[name$="[id]"]').val(_index);
+            $(this).closest(".wc-metabox").attr("data-index", _index);
+        });
+
     });
 
 })(jQuery);

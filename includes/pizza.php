@@ -78,7 +78,9 @@ class U_Pizza {
             wp_enqueue_media();
             wp_enqueue_style( 'pizza-admin', plugins_url('assets/css/admin.min.css', U_PIZZA_DIR), [], time(), 'all' );
             wp_enqueue_script( 'pizza-admin-settings', plugins_url('assets/js/adminPizzaSettings.js', U_PIZZA_DIR), ['jquery'], time(), true );
-
+            wp_localize_script('pizza-admin-settings', 'U_PIZZA_DATA', [
+                'url' => plugins_url('/assets/', U_PIZZA_DIR),
+            ]);
         }
     }
 
