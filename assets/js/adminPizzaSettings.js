@@ -128,16 +128,15 @@
     // Add Component
     .on("click", ".add-component", function () {
         let indexGroup = $(this).closest(".wc-metabox").attr("data-index");
-        // let indexComponent = $(".group-component").length + 1;
         let indexComponent =
             Math.max.apply(
-            null,
-            $("#u-pizza-settings")
-                .find(".remove-component")
-                .map(function () {
-                return $(this).attr("data-id");
-                })
-                .get()
+                null,
+                $("#u-pizza-settings")
+                    .find(".remove-component")
+                    .map(function () {
+                    return $(this).attr("data-id");
+                    })
+                    .get()
             ) + 1;
         console.log(indexComponent);
         const template = wp.template("pizza-component");
@@ -187,20 +186,6 @@
             $(componentContainer).remove();
         }
 
-        $(".group-component").each(function (index, el) {
-            let _index = index + 1;
-            $(this)
-                .find("input, textarea")
-                .prop("name", function (i, val) {
-                let fieldName = val.replace(
-                    /\[components][[0-9]+\]/g,
-                    "[components][" + _index + "]"
-                );
-                return fieldName;
-            });
-            $(this).find('input[name$="[id]"]').val(_index);
-            $(this).find(".remove-component").attr("data-id", _index);
-        });
     });
 
 })(jQuery);
