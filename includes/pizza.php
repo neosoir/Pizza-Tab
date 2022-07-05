@@ -32,8 +32,11 @@ class U_Pizza {
         //add_filter('product_type_selector', [$this, 'add_product_types']);
         //add_action( 'admin_footer', [$this, 'display_prices_for_footer'] );
 
-        // Add checkbox in porduct type
+        //product admin page
         add_filter('product_type_options', [$this, 'woo_type_options']);
+        add_filter('woocommerce_product_data_tabs',  [$this, 'woo_set_pizza_tabs']);
+        add_action('woocommerce_product_data_panels', [$this, 'woo_add_product_pizza_fields']);
+        //add_action('woocommerce_process_product_meta',  [$this, 'woo_save_data'], 10, 2);
 
     }
 
@@ -154,5 +157,28 @@ class U_Pizza {
         ];
 
         return $options;
+    }
+
+    /**
+     * 
+     */
+    public function woo_set_pizza_tabs($tabs)
+    {
+        $tabs['u_pizza'] = [
+            'label' => esc_html__('Pizza data', 'u-pizza'),
+            'target' => 'u_pizza_product_data',
+            'class' => 'show_if_u_pizza',
+            'priority' => 75
+
+        ];
+        return $tabs;
+    }
+
+    /**
+     * 
+     */
+    public function woo_add_product_pizza_fields()
+    {
+        require_once U_PIZZA_PATH . 'templates/admin/pizza-product.php';
     }
 }
