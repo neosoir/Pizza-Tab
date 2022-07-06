@@ -195,5 +195,19 @@ class U_Pizza {
     public function woo_save_data($post_id, $post)
     {
         update_post_meta($post_id, '_u_pizza', isset($_POST['_u_pizza']) ? 'yes' : 'no');
+
+        if ( isset( $_POST['_u_pizza'] ) ) {
+            $data = [
+                'pizza'  => [
+                    'enable'    => true,
+                    'base'      => $_POST['pizza_base_components'],
+                    'extra'     => $_POST['pizza_extra_components'] 
+                ],
+                'dish'  => [
+                    'enable'    => false,
+                ]
+            ];
+            update_post_meta( $post_id, 'u_product_pizza_data', $data );
+        }
     }
 }
