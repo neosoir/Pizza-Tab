@@ -208,7 +208,8 @@ class U_Pizza {
         if ( isset( $_POST['_u_pizza'] ) ) {
 
             $pizza_data         = get_option('u_pizza_data');
-            $pizza_components   = array_merge( ...wp_list_pluck( $pizza_data, 'components' ) );
+            $pizza_components   = u_flatten_array(wp_list_pluck($pizza_data, 'components'));
+
             $base_components    = array_map(
                 function ($component) {
                     if (array_key_exists($component['id'], $_POST['pizza_base'])) {
@@ -256,7 +257,6 @@ class U_Pizza {
                     'enabled'       => $_POST['pizza_type'] == 2 ? 1 : 0,
                     'components'    => $dish_components, //store components
                     'tabs'          => isset($_POST['dish_tabs']) ? 1 : 0,
-                    // 'tab_components' => [] //store groupds with components
                 ]
             ];
             update_post_meta( $post_id, 'u_product_pizza_data', $data );

@@ -92,3 +92,43 @@ function u_pizza_sides()
     });
     return $sides_components;
 }
+function u_flatten_array( $array )
+{
+    $newArray = [];
+
+    foreach ($array as $key => $value) {
+        foreach ($value as $component_key => $component) {
+            $newArray[$component_key] = $component;
+        }
+    }
+    return $newArray;
+}
+
+/**
+ * Get array [group => [id => '', group_name =>'', components => []]] from components array
+ */
+function u_pizza_tab_components( $product_id )
+{
+    $pizza_data             = get_option('u_pizza_data');
+    $product_pizza_data     = get_post_meta($product_id, 'u_product_pizza_data', true);
+    if (empty($product_pizza_data['dish']['components'])) {
+        return;
+    }
+    $tab_components         = [];
+    foreach ($pizza_data as $group_key => $group) {
+        $tab_components[$group_key] = [
+            'id' => $group['id'],
+            'group_name' => $group['group_name'],
+            'image' => $group['image'],
+            'imageId' => $group['imageId'],
+        ];
+        foreach ($group['components'] as $component) {
+            if (array_key_exists($component['id'], $product_pizza_data['dish']['components'])) {
+                $tab_components[$group_key]['components'][$component['id']] = $component;
+            }
+        }
+    }
+    return array_filter($tab_components, function ($group) {
+        return isset($group['components']);
+    });
+}

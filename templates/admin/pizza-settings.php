@@ -1,12 +1,10 @@
 <?php
 wp_enqueue_style('woocommerce_admin_styles');
 wp_enqueue_script('wc-admin-meta-boxes');
-$pizza_data = get_option('u_pizza_data') ? get_option('u_pizza_data') : u_pizza_get_default_data();
-$pizza_components = array_merge(...wp_list_pluck($pizza_data, 'components'));
-$pizza_product_data = get_post_meta(101, 'u_product_pizza_data', true);
+$pizza_data         = get_option('u_pizza_data') ? get_option('u_pizza_data') : u_pizza_get_default_data();
+$pizza_components   = array_merge( ...wp_list_pluck( $pizza_data, 'components' ) );
 
 /* echo "<pre>";
-print_r($pizza_data);
 print_r(u_flatten_array(wp_list_pluck($pizza_data, 'components')));
 echo '</pre>'; */
 
