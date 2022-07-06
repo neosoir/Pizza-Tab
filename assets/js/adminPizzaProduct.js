@@ -122,4 +122,12 @@
         }
     });
 
+    //toggle floors components checkbox
+    $("#pizza_floors").on("change", function () {
+        if ($(this).is(":checked")) {
+        $("#pizza_floors_block").show();
+        } else {
+        $("#pizza_floors_block").hide();
+        }
+    });
 })(jQuery);

@@ -6,6 +6,8 @@ $pizza_product_data = get_post_meta($post->ID, 'u_product_pizza_data', true);
 /* echo "<pre>";
 print_r($pizza_product_data);
 echo '</pre>'; */
+
+// For floor products.
 $wc_products = wc_get_products([
     'limit' => -1,
     'type' => ['simple', 'variation'],
@@ -183,6 +185,16 @@ $wc_products = wc_get_products([
             <div class="form-group-full">
                 <input type="checkbox" id="pizza_floors" name="pizza_floors" <?php $pizza_product_data ? checked($pizza_product_data['pizza']['floors']['enabled'], true) : ''; ?>>
                 <label for="pizza_floors"><?php esc_html_e('Enable floors block', 'u-pizza'); ?></label>
+            </div>
+
+            <!-- Floors block container -->
+            <div id="pizza_floors_block" class="form-group" style="<?php echo $pizza_product_data && $pizza_product_data['pizza']['floors']['enabled'] ? '' : 'display:none;'; ?>">
+                <label for="pizza_floor_products"><?php esc_html_e('Products for floors', 'u-pizza'); ?></label>
+                <select class="wc-product-search" id="pizza_floor_products" name="pizza_floor_products[]" data-action="woocommerce_json_search_products_and_variations" data-exclude="<?php echo esc_attr($post->ID); ?>" data-placeholder="<?php esc_html_e('Search for a product…', 'u-pizza'); ?>" style="width: 400px;" multiple>
+                    <?php foreach ($wc_products as $product) : ?>
+                        <option value="<?php echo esc_attr($product->get_id()); ?>" <?php $pizza_product_data && !empty($pizza_product_data['pizza']['floors']['components']) ? selected(in_array($product->get_id(), $pizza_product_data['pizza']['floors']['components']), true) : ''; ?>><?php echo esc_html($product->get_name()); ?> </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
         </div>

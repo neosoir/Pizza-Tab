@@ -248,7 +248,7 @@ class U_Pizza {
                     ],
                     'floors'        => [
                         'enabled'       => isset($_POST['pizza_floors']) ? 1 : 0,
-                        'components'    => wc_clean($_POST['pizza_floor_products']) //ids
+                        'components'    => wc_clean( $_POST['pizza_floor_products'] ) //ids
                     ],
                     'price_inc' => isset($_POST['price_inc']) ? 1 : 0,
                 ],
