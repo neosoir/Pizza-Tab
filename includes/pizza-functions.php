@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Default data for U pizza components
+ */
 function u_pizza_get_default_data()
 {
 
@@ -71,4 +74,21 @@ function u_pizza_get_default_data()
     ];
 
     return apply_filters('u_pizza_default_data', $data);
+}
+/**
+ * Get components with meta checked
+ * @return array
+ */
+
+function u_pizza_sides()
+{
+    $pizza_data = get_option('u_pizza_data');
+    if (!$pizza_data) {
+        return [];
+    }
+    $pizza_components = array_merge(...wp_list_pluck($pizza_data, 'components'));
+    $sides_components =  array_filter($pizza_components, function ($component) {
+        return $component['meta'];
+    });
+    return $sides_components;
 }

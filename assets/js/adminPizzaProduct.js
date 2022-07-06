@@ -113,4 +113,13 @@
         $(`#pizza_block_1`).hide();
     }
 
+    //toggle sides components checkbox
+    $("#pizza_sides").on("change", function () {
+        if ($(this).is(":checked")) {
+            $("#pizza_sides_block").show();
+        } else {
+            $("#pizza_sides_block").hide();
+        }
+    });
+
 })(jQuery);

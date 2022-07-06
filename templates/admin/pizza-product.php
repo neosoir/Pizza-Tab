@@ -28,8 +28,10 @@ $wc_products = wc_get_products([
         </div>
     </div>
     <div class="pizza-product-content">
+
         <!-- For Pizza -->
         <div id="pizza_block_1">
+
             <!-- Select base and extra components -->
             <div>
                 <div class="form-group">
@@ -57,6 +59,7 @@ $wc_products = wc_get_products([
                     </select>
                 </div>
             </div>
+
             <!-- Components -->
             <div class="group-components" id="pizza_consists_block">
                 <?php if ($pizza_product_data && !empty($pizza_product_data['pizza']['base'])) : ?>
@@ -98,16 +101,90 @@ $wc_products = wc_get_products([
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
-            <!-- Sides block -->
+
+            <!-- Sides block checkbox -->
             <div class="form-group-full">
                 <input type="checkbox" id="pizza_sides" name="pizza_sides" <?php $pizza_product_data ? checked($pizza_product_data['pizza']['sides']['enabled'], true) : ''; ?>>
                 <label for="pizza_sides"><?php esc_html_e('Enable sides block', 'u-pizza'); ?></label>
             </div>
-            <!-- Floors block -->
+
+            <!-- Sides block container -->
+            <div class="group-components" id="pizza_sides_block" style="<?php echo $pizza_product_data && $pizza_product_data['pizza']['sides']['enabled'] ? '' : 'display:none;'; ?>">
+                <?php if ($pizza_product_data && !empty($pizza_product_data['pizza']['sides']['components'])) : ?>
+                    <?php
+                    foreach (u_pizza_sides() as $component) {
+
+                        if (!in_array($component['id'], wp_list_pluck($pizza_product_data['pizza']['sides']['components'], 'id'))) {
+                            array_push($pizza_product_data['pizza']['sides']['components'], $component);
+                        }
+                    }
+                    ?>
+                    <?php foreach ($pizza_product_data['pizza']['sides']['components'] as $component) : ?>
+                        <div class="group-component" data-id="<?php echo esc_attr($component['id']); ?>">
+                            <div class="component-header">
+                                <div class="component-details">
+                                    <span><?php echo esc_html($component['name']); ?></span>
+                                    <span><?php echo wc_price($component['price']); ?></span>
+                                </div>
+                                <div class="component-actions">
+                                    <span class="dashicons dashicons-edit edit-component"></span>
+                                </div>
+                            </div>
+                            <div class="component-body">
+                                <div class="component-img">
+                                    <img src="<?php echo esc_attr(wp_get_attachment_image_url($component['imageId'], 'medium')); ?>" alt="">
+                                </div>
+                            </div>
+                            <div class="component-body-collapse">
+                                <div class="form-group-full">
+                                    <label for=""><?php esc_html_e('Price', 'u-pizza'); ?></label>
+                                    <input type="text" name="pizza_side[<?php echo esc_attr($component['id']); ?>][price]" value="<?php echo esc_attr($component['price']); ?>">
+                                </div>
+                                <div class="form-group-full">
+                                    <label for=""><?php esc_html_e('Weight', 'u-pizza'); ?></label>
+                                    <input type="text" name="pizza_side[<?php echo esc_attr($component['id']); ?>][weight]" value="<?php echo esc_attr($component['weight']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php elseif (!empty(u_pizza_sides())) : ?>
+                    <?php foreach (u_pizza_sides() as $component) : ?>
+                        <div class="group-component" data-id="<?php echo esc_attr($component['id']); ?>">
+                            <div class="component-header">
+                                <div class="component-details">
+                                    <span><?php echo esc_html($component['name']); ?></span>
+                                    <span><?php echo wc_price($component['price']); ?></span>
+                                </div>
+                                <div class="component-actions">
+                                    <span class="dashicons dashicons-edit edit-component"></span>
+                                </div>
+                            </div>
+                            <div class="component-body">
+                                <div class="component-img">
+                                    <img src="<?php echo esc_attr(wp_get_attachment_image_url($component['imageId'], 'medium')); ?>" alt="">
+                                </div>
+                            </div>
+                            <div class="component-body-collapse">
+                                <div class="form-group-full">
+                                    <label for=""><?php esc_html_e('Price', 'u-pizza'); ?></label>
+                                    <input type="text" name="pizza_side[<?php echo esc_attr($component['id']); ?>][price]" value="<?php echo esc_attr($component['price']); ?>">
+                                </div>
+                                <div class="form-group-full">
+                                    <label for=""><?php esc_html_e('Weight', 'u-pizza'); ?></label>
+                                    <input type="text" name="pizza_side[<?php echo esc_attr($component['id']); ?>][weight]" value="<?php echo esc_attr($component['weight']); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+
+            <!-- Floors block checkbox -->
             <div class="form-group-full">
                 <input type="checkbox" id="pizza_floors" name="pizza_floors" <?php $pizza_product_data ? checked($pizza_product_data['pizza']['floors']['enabled'], true) : ''; ?>>
                 <label for="pizza_floors"><?php esc_html_e('Enable floors block', 'u-pizza'); ?></label>
             </div>
+
         </div>
 
         <!-- For Dish -->
@@ -129,6 +206,7 @@ $wc_products = wc_get_products([
                 <label for="dish_tabs"><?php esc_html_e('Enable tabs', 'u-pizza'); ?></label>
             </div>
         </div>
+
     </div> 
 </div>
 

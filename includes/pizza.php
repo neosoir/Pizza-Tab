@@ -219,7 +219,6 @@ class U_Pizza {
                     }
                     return $component;
                 },
-
                 array_filter($pizza_components, function ($component) {
                     return in_array($component['id'], $_POST['pizza_base_components']);
                 })
@@ -230,6 +229,14 @@ class U_Pizza {
             $dish_components    = array_filter($pizza_components, function ($component) {
                 return in_array($component['id'], $_POST['dish_components']);
             });
+            $sides_components = array_map(
+                function ($component) {
+                    $component['price'] = $_POST['pizza_side'][$component['id']]['price'];
+                    $component['weight'] = $_POST['pizza_side'][$component['id']]['weight'];
+                    return $component;
+                },
+                u_pizza_sides()
+            );
             $data = [
                 'pizza' => [
                     'enabled'       => $_POST['pizza_type'] == 1 ? 1 : 0,
