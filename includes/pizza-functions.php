@@ -132,3 +132,10 @@ function u_pizza_tab_components( $product_id )
         return isset($group['components']);
     });
 }
+
+/**
+ * 
+ */
+function u_is_pizza_product( $product_id ) {
+    return get_post_meta( $product_id, '_u_pizza', true );
+}

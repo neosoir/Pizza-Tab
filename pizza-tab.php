@@ -57,9 +57,15 @@ class U_Pizza_Install {
     {
 
         //require_once U_PIZZA_PATH . 'includes/u-pizza-product.php';
+        require_once U_PIZZA_PATH . 'includes/traits/instantiable.php';
         require_once U_PIZZA_PATH . 'includes/pizza-functions.php';
         require_once U_PIZZA_PATH . 'includes/pizza.php';
+        require_once U_PIZZA_PATH . 'includes/pizza-display.php';
+
         U_Pizza::instance();
+
+        U_Pizza_Display::instance();
+
 
     }
 
