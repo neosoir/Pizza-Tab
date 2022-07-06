@@ -116,9 +116,18 @@ class U_Pizza {
             ]);
         }
         if ( $post->post_type === 'product' ) {
+            $pizza_data         = get_option( 'u_pizza_data' );
+            $pizza_components   = array_merge( ...wp_list_pluck($pizza_data, 'components') );
             wp_enqueue_media();
             wp_enqueue_style('pizza-admin');
             wp_enqueue_script('pizza-admin-product', plugins_url('assets/js/adminPizzaProduct.js', U_PIZZA_DIR), ['jquery'], time(), true);
+            wp_localize_script('pizza-admin-product', 'U_PRODUCT_DATA', [
+                'url'               => plugins_url('/assets/', U_PIZZA_DIR),
+                'pizza_components'  => $pizza_components,
+                'wc_symbol'         => get_woocommerce_currency_symbol(),
+                'price_position'    => get_option('woocommerce_currency_pos'),
+                'decimals'          => wc_get_price_decimals(),
+            ]);
         }
     }
 

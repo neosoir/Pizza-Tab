@@ -1,8 +1,15 @@
 (function ($) {
+
+    const pizzaComponets = U_PRODUCT_DATA.pizza_components;
+    console.log( pizzaComponets );
     
     // Select base components.
     $("#pizza_base_components").selectWoo({
         placeholder: "Consists of components",
+    })
+    .on("select2:select", function(e) {
+        let data = e.params.data;
+        console.log(data);
     });
     // Select extra components.
     $("#pizza_extra_components").selectWoo({
