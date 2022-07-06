@@ -68,22 +68,17 @@ $wc_products = wc_get_products([
                                 <div class="component-details">
                                     <span><?php echo esc_html($component['name']); ?></span>
                                     <span><?php echo wc_price($component['price']); ?></span>
-
-
                                 </div>
                                 <div class="component-actions">
                                     <span class="dashicons dashicons-edit edit-component"></span>
-
                                 </div>
                             </div>
                             <div class="component-body">
                                 <div class="component-img">
                                     <img src="<?php echo esc_attr(wp_get_attachment_image_url($component['imageId'], 'medium')); ?>" alt="">
-
                                 </div>
                             </div>
                             <div class="component-body-collapse">
-
                                 <div class="form-group-full">
                                     <label for=""><?php esc_html_e('Price', 'u-pizza'); ?></label>
                                     <input type="text" name="pizza_base[<?php echo esc_attr($component['id']); ?>][price]" value="<?php echo esc_attr($component['price']); ?>">
@@ -92,14 +87,11 @@ $wc_products = wc_get_products([
                                     <label for=""><?php esc_html_e('Weight', 'u-pizza'); ?></label>
                                     <input type="text" name="pizza_base[<?php echo esc_attr($component['id']); ?>][weight]" value="<?php echo esc_attr($component['weight']); ?>">
                                 </div>
-
                                 <div class="form-group-full">
-
                                     <input type="checkbox" name="pizza_base[<?php echo esc_attr($component['id']); ?>][required]" <?php checked($component['required'], 1); ?>>
                                     <label for=""><?php esc_html_e('Required', 'u-pizza'); ?></label>
                                 </div>
                                 <div class="form-group-full">
-
                                     <input type="checkbox" name="pizza_base[<?php echo esc_attr($component['id']); ?>][visible]" <?php checked($component['visible'], 1); ?>>
                                     <label for=""><?php esc_html_e('Visible', 'u-pizza'); ?></label>
                                 </div>
