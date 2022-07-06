@@ -227,14 +227,29 @@ class U_Pizza {
             $extra_components   = array_filter( $pizza_components, function( $componet ) {
                 return in_array( $componet['id'], $_POST['pizza_extra_components'] );
             });
+            $dish_components    = array_filter($pizza_components, function ($component) {
+                return in_array($component['id'], $_POST['dish_components']);
+            });
             $data = [
-                'pizza'  => [
-                    'enabled'   => $_POST['pizza_type'] == 1 ? 1 : 0,
-                    'base'      => $base_components,
-                    'extra'     => $extra_components
+                'pizza' => [
+                    'enabled'       => $_POST['pizza_type'] == 1 ? 1 : 0,
+                    'base'          => $base_components, ///components
+                    'extra'         => $extra_components, ///components
+                    'sides'         => [
+                        'enabled'       => isset($_POST['pizza_sides']) ? 1 : 0,
+                        'components'    => $sides_components
+                    ],
+                    'floors'        => [
+                        'enabled'       => isset($_POST['pizza_floors']) ? 1 : 0,
+                        'components'    => wc_clean($_POST['pizza_floor_products']) //ids
+                    ],
+                    'price_inc' => isset($_POST['price_inc']) ? 1 : 0,
                 ],
-                'dish'  => [
-                    'enabled'    => $_POST['pizza_type'] == 2 ? 1 : 0,
+                'dish' => [
+                    'enabled'       => $_POST['pizza_type'] == 2 ? 1 : 0,
+                    'components'    => $dish_components, //store components
+                    'tabs'          => isset($_POST['dish_tabs']) ? 1 : 0,
+                    // 'tab_components' => [] //store groupds with components
                 ]
             ];
             update_post_meta( $post_id, 'u_product_pizza_data', $data );

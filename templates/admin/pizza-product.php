@@ -109,6 +109,26 @@ $wc_products = wc_get_products([
                 <label for="pizza_floors"><?php esc_html_e('Enable floors block', 'u-pizza'); ?></label>
             </div>
         </div>
+
+        <!-- For Dish -->
+        <div id="pizza_block_2">
+            <div class="form-group-full">
+                <label for="dish_components"><?php esc_html_e('Base components', 'u-pizza'); ?></label>
+                <select id="dish_components" name="dish_components[]" multiple>
+                    <?php foreach ($pizza_data as $group) : ?>
+                        <optgroup label="<?php echo esc_attr($group['group_name']); ?>">
+                            <?php foreach ($group['components'] as $component) : ?>
+                                <option value="<?php echo esc_attr($component['id']); ?>" <?php $pizza_product_data ? selected(in_array($component['id'], wp_list_pluck($pizza_product_data['dish']['components'], 'id')), true) : ''; ?>><?php echo esc_html($component['name']); ?> </option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group-full">
+                <input type="checkbox" id="dish_tabs" name="dish_tabs" <?php $pizza_product_data ? checked($pizza_product_data['dish']['tabs'], true) : ''; ?>>
+                <label for="dish_tabs"><?php esc_html_e('Enable tabs', 'u-pizza'); ?></label>
+            </div>
+        </div>
     </div> 
 </div>
 

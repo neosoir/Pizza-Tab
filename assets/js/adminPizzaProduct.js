@@ -70,10 +70,17 @@
         let data = e.params.data;
         $(`#pizza_consists_block .group-component[data-id=${data.id}]`).remove();
     });
+
     // Select extra components.
     $("#pizza_extra_components").selectWoo({
         placeholder: "Extra of components",
     });
+
+    // Select extra components.
+    $("#dish_components").selectWoo({
+        placeholder: "Extra of components",
+    });
+
     // Principal function to manipulate Groups and components.
     $("#pizza_block_1").on("click", ".edit-component", function () {
         if ($(this).is(".active")) {
@@ -92,5 +99,18 @@
             $(this).addClass("active");
         }
     });
+
+    //handle tab select
+    $("input[name=pizza_type]").on("change", function () {
+        let value = $(this).val();
+        $(`#pizza_block_1`).hide();
+        $(`#pizza_block_2`).hide();
+        $(`#pizza_block_${value}`).show();
+    });
+    if ($("input[name=pizza_type]:checked").val() == 1) {
+        $(`#pizza_block_2`).hide();
+    } else {
+        $(`#pizza_block_1`).hide();
+    }
 
 })(jQuery);
