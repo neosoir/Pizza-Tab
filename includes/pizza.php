@@ -198,30 +198,18 @@ class U_Pizza {
 
         if ( isset( $_POST['_u_pizza'] ) ) {
 
-            $pizza_data = get_option('u_pizza_data');
-            $pizza_componets = array_merge( ...wp_list_pluck( $pizza_data, 'components' ) );
-            $base_components = array_map(
-                function ($component) {
-                    if (array_key_exists($component['id'], $_POST['pizza_base'])) {
-                        $component['price']     = $_POST['pizza_base'][$component['id']]['price'];
-                        $component['weight']    = $_POST['pizza_base'][$component['id']]['weight'];
-                        $component['required']  = isset($_POST['pizza_base'][$component['id']]['required']) ? 1 : 0;
-                        $component['visible']   = isset($_POST['pizza_base'][$component['id']]['visible']) ? 1 : 0;
-                    }
-                    return $component;
-                },
-
-                array_filter($pizza_components, function ($component) {
-                    return in_array($component['id'], $_POST['pizza_base_components']);
-                })
-            );
-            $extra_components = array_filter( $pizza_componets, function( $componet ) {
+            $pizza_data         = get_option('u_pizza_data');
+            $pizza_componets    = array_merge( ...wp_list_pluck( $pizza_data, 'components' ) );
+            $base_components    = array_filter( $pizza_componets, function( $componet ) {
+                return in_array( $componet['id'], $_POST['pizza_base_components'] );
+            });
+            $extra_components   = array_filter( $pizza_componets, function( $componet ) {
                 return in_array( $componet['id'], $_POST['pizza_extra_components'] );
             });
         
             $data = [
                 'pizza'  => [
-                    'enabled'    => $_POST['pizza_type'] == 1 ? 1 : 0,
+                    'enabled'   => $_POST['pizza_type'] == 1 ? 1 : 0,
                     'base'      => $base_components,
                     'extra'     => $extra_components
                 ],
