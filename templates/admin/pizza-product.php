@@ -35,7 +35,7 @@ $wc_products = wc_get_products([
                 <label for="price_inc"><?php esc_html_e('Enable price include', 'u-pizza'); ?></label>
             </div>
             <div>
-                <div class="form-group">
+            <div class="form-group">
                     <label for="pizza_base_components"><?php esc_html_e('Base components', 'u-pizza'); ?></label>
                     <select id="pizza_base_components" name="pizza_base_components[]" multiple>
                         <?php foreach ($pizza_data as $group) : ?>
@@ -46,6 +46,19 @@ $wc_products = wc_get_products([
                             </optgroup>
                         <?php endforeach; ?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for=""><?php esc_html_e('Extra components', 'u-pizza'); ?></label>
+                    <select id="pizza_extra_components" name="pizza_extra_components[]" multiple>
+                        <?php foreach ($pizza_data as $group) : ?>
+                            <optgroup label="<?php echo esc_attr($group['group_name']); ?>">
+                                <?php foreach ($group['components'] as $component) : ?>
+                                    <option value="<?php echo esc_attr($component['id']); ?>" <?php $pizza_product_data ? selected(in_array($component['id'], wp_list_pluck($pizza_product_data['pizza']['extra'], 'id')), true) : ''; ?>><?php echo esc_html($component['name']); ?> </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                        <?php endforeach; ?>
+                    </select>
+
                 </div>
             </div>
         </div>
