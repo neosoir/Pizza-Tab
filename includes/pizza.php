@@ -209,12 +209,12 @@ class U_Pizza {
         
             $data = [
                 'pizza'  => [
-                    'enable'    => true,
+                    'enabled'    => $_POST['pizza_type'] == 1 ? 1 : 0,
                     'base'      => $base_components,
                     'extra'     => $extra_components
                 ],
                 'dish'  => [
-                    'enable'    => false,
+                    'enabled'    => $_POST['pizza_type'] == 2 ? 1 : 0,
                 ]
             ];
             update_post_meta( $post_id, 'u_product_pizza_data', $data );
