@@ -30,6 +30,7 @@ $wc_products = wc_get_products([
     <div class="pizza-product-content">
         <!-- For Pizza -->
         <div id="pizza_block_1">
+            <!-- Select base and extra components -->
             <div>
                 <div class="form-group">
                     <label for="pizza_base_components"><?php esc_html_e('Base components', 'u-pizza'); ?></label>
@@ -56,6 +57,7 @@ $wc_products = wc_get_products([
                     </select>
                 </div>
             </div>
+            <!-- Components -->
             <div class="group-components" id="pizza_consists_block">
                 <?php if ($pizza_product_data && !empty($pizza_product_data['pizza']['base'])) : ?>
                     <?php foreach ($pizza_product_data['pizza']['base'] as $component) : ?>
@@ -96,6 +98,16 @@ $wc_products = wc_get_products([
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
+            <!-- Sides block -->
+            <div class="form-group-full">
+                <input type="checkbox" id="pizza_sides" name="pizza_sides" <?php $pizza_product_data ? checked($pizza_product_data['pizza']['sides']['enabled'], true) : ''; ?>>
+                <label for="pizza_sides"><?php esc_html_e('Enable sides block', 'u-pizza'); ?></label>
+            </div>
+            <!-- Floors block -->
+            <div class="form-group-full">
+                <input type="checkbox" id="pizza_floors" name="pizza_floors" <?php $pizza_product_data ? checked($pizza_product_data['pizza']['floors']['enabled'], true) : ''; ?>>
+                <label for="pizza_floors"><?php esc_html_e('Enable floors block', 'u-pizza'); ?></label>
+            </div>
         </div>
     </div> 
 </div>
@@ -117,4 +129,46 @@ $wc_products = wc_get_products([
         } 
     });
 
+</script>
+
+<script type="text/html" id="tmpl-pizza-component">
+    <div class="group-component" data-id="{{{data.index}}}">
+        <div class="component-header">
+            <div class="component-details">
+                <span>{{{data.name.value}}}</span>
+                <span>{{{data.price.value}}}</span>
+
+            </div>
+            <div class="component-actions">
+                <span class="dashicons dashicons-edit edit-component"></span>
+            </div>
+        </div>
+        <div class="component-body">
+            <div class="component-img">
+                <img src="{{{data.image.value}}}" alt="">
+
+            </div>
+
+        </div>
+        <div class="component-body-collapse">
+
+            <div class="form-group-full component-price">
+                <label for=""><?php esc_html_e('Price', 'u-pizza'); ?></label>
+                <input type="text" name="{{{data.price.name}}}" value="{{{data.price.raw}}}">
+            </div>
+            <div class="form-group-full component-weight">
+                <label for=""><?php esc_html_e('Weight', 'u-pizza'); ?></label>
+                <input type="text" name="{{{data.weight.name}}}" value="{{{data.weight.value}}}">
+            </div>
+            <div class="form-group-full component-meta">
+                <input type="checkbox" name="{{{data.visible.name}}}" <# if(data.visible.value==1) { #> checked <#} #>>
+                    <label for=""><?php esc_html_e('Visible', 'u-pizza'); ?></label>
+            </div>
+            <div class="form-group-full component-meta">
+                <input type="checkbox" name="{{{data.required.name}}}" <# if(data.required.value==1) { #> checked <#} #>>
+                    <label for=""><?php esc_html_e('Required', 'u-pizza'); ?></label>
+            </div>
+        </div>
+
+    </div>
 </script>
