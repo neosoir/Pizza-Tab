@@ -3,9 +3,9 @@ global $post;
 $pizza_data = get_option('u_pizza_data');
 $pizza_product_data = get_post_meta($post->ID, 'u_product_pizza_data', true);
 
-// echo "<pre>";
-// print_r($pizza_product_data['pizza']['sides']['components']);
-// echo '</pre>';
+/* echo "<pre>";
+print_r($pizza_product_data);
+echo '</pre>'; */
 $wc_products = wc_get_products([
     'limit' => -1,
     'type' => ['simple', 'variation'],

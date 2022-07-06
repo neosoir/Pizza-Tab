@@ -197,11 +197,21 @@ class U_Pizza {
         update_post_meta($post_id, '_u_pizza', isset($_POST['_u_pizza']) ? 'yes' : 'no');
 
         if ( isset( $_POST['_u_pizza'] ) ) {
+
+            $pizza_data = get_option('u_pizza_data');
+            $pizza_componets = array_merge( ...wp_list_pluck( $pizza_data, 'components' ) );
+            $base_components = array_filter( $pizza_componets, function( $componet ) {
+                return in_array( $componet['id'], $_POST['pizza_base_components'] );
+            });
+            $extra_components = array_filter( $pizza_componets, function( $componet ) {
+                return in_array( $componet['id'], $_POST['pizza_extra_components'] );
+            });
+        
             $data = [
                 'pizza'  => [
                     'enable'    => true,
-                    'base'      => $_POST['pizza_base_components'],
-                    'extra'     => $_POST['pizza_extra_components'] 
+                    'base'      => $base_components,
+                    'extra'     => $extra_components
                 ],
                 'dish'  => [
                     'enable'    => false,
