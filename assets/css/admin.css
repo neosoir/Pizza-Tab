@@ -88,10 +88,20 @@
 .component-body-collapse {
   display: none;
 }
-.component-body .component-img img {
-  width: 150px;
+
+.component-body .component-img {
+  width: 100%;
   margin: 0 auto;
   display: block;
+}
+
+.component-body .component-img img {
+  width: 100%;
+  min-height: 160px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+  border-radius: 10px;
 }
 .component-image img {
   width: 70px;
@@ -118,6 +128,7 @@
 .group-image img {
   display: block;
   width: 100px;
+  border-radius: 10px;
 }
 .form-group-image {
   display: flex;
