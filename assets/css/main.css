@@ -525,7 +525,6 @@ form.cart .component-buttons button:hover {
     color:#58ce47
 }
 form.cart .component-buttons input[type=number] {
-    width:22px;
     height:38px;
     font-size:14px;
     line-height:16px;
