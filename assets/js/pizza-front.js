@@ -116,5 +116,24 @@
         $(this).addClass("active");
         $(`${e.target.hash}`).addClass("fade-in");
     });
-    
+
+    // Formating price 
+    let symbol              = PIZZA_FRONT_DATA.wc_symbol,
+        pricePosition       = PIZZA_FRONT_DATA.price_position,
+        wcDecimals          = PIZZA_FRONT_DATA.decimals || 2;
+    const u_wc_price = (price) => {
+        //recreating wc_price() function
+        switch (pricePosition) {
+            case "left":
+                return `${symbol}${price.toFixed(wcDecimals)}`;
+            case "right":
+                return `${price.toFixed(wcDecimals)}${symbol}`;
+            case "left_space":
+                return `${symbol} ${price.toFixed(wcDecimals)}`;
+            case "right_space":
+                return `${price.toFixed(wcDecimals)} ${symbol}`;
+        }
+    }
+    // To other files can use this function
+    window.u_wc_price = u_wc_price;
 })(jQuery);

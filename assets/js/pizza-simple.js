@@ -27,8 +27,19 @@
                         sum += parseFloat( componentObject.price ) * parseInt( val )
                     }
             });
-            console.log(sum)
+            console.log(sum);
+            refreshPriceHtml(sum);
         }
+        //Refresh prices
+        const refreshPriceHtml = (summ) => {
+            let priceContainer = $(".product").find(".price");
+            //let priceFloorContainer = $(document.body).find(".floors-total-price");
+
+            priceContainer.html(u_wc_price(summ));
+            //if (floorsEnabled || sidesEnabled) {
+            //priceFloorContainer.html(u_wc_price(summ));
+            //}
+        };
 
 
     }

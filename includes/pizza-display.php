@@ -27,6 +27,12 @@ class U_Pizza_Display {
     {
         wp_enqueue_style( 'pizza-front', plugins_url( 'assets/css/main.min.css', U_PIZZA_DIR ), [], '1.0.0', 'all' );
         wp_enqueue_script( 'pizza-front', plugins_url( 'assets/js/pizza-front.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
+        wp_localize_script('pizza-front', 'PIZZA_FRONT_DATA', [
+            'url'               => plugins_url('/assets/', U_PIZZA_DIR),
+            'wc_symbol'         => get_woocommerce_currency_symbol(),
+            'price_position'    => get_option('woocommerce_currency_pos'),
+            'decimals'          => wc_get_price_decimals(),
+        ]);
         wp_register_script( 'pizza-simple', plugins_url( 'assets/js/pizza-simple.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
     }
 
