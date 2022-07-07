@@ -40,6 +40,29 @@ echo "</pre>"; */
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
+                <?php if (!empty($data['pizza']['base'])) : ?>
+                    <div id="remove-component" class="pizza-components-tab">
+                        <?php foreach ($data['pizza']['base'] as $c) : ?>
+                            <?php if (! $c['visible']) continue; ?>
+                            <div class="pizza-components-item">
+                                <?php if (!$c['required']) : ?>
+                                    <a href="#" class="u-remove-component">
+                                        <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M 4 4 L 16 16 M 16 4 L 4 16" fill="#fff" stroke-width="3" />
+                                        </svg>
+                                    </a>
+                                <?php endif; ?>
+                                <span class="pizza-component-name"><?php echo esc_html($c['name']); ?></span>
+                                <img class="pizza-component-image" src="<?php echo esc_url(wp_get_attachment_image_url($c['imageId'], 'medium')); ?>" alt="">
+                                <?php if (!empty($c['weight'])) : ?>
+                                    <p class="pizza-component-meta"><span class="pizza-component-weight"><?php echo esc_html($c['weight']) . '/'; ?></span><span class="pizza-component-price"><?php echo wc_price($c['price']); ?></span></p>
+                                <?php else : ?>
+                                    <p class="pizza-component-meta"><span class="pizza-component-price"><?php echo wc_price($c['price']); ?></span></p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     <?php endif; ?>
