@@ -1,18 +1,28 @@
 (function ($) {
+
+    // Formate the product data in product container.
     const dataComponents = JSON.parse(
         $('.pizza_components_wrapper').attr('data-pizza')
     );
 
-    let initialPrice = $('.pizza_components_wrapper').attr('data-price');
-    console.log(initialPrice);
+    // Get the product price.
+    let initialPrice    = $('.pizza_components_wrapper').attr('data-price');
+    const inputBase     = $('input[name=u-pizza-base]');
 
+    //
     if ( ( $('form.variations_form').length === 0 ) && ($('form.cart').length > 0 )  ) {
 
+        // Calculate the product price depending the components quantity.
         $(".component-buttons").on("click", ".plus, .minus", function () {
             calculate();
         });
 
-        //Calculation process
+        // Remove component (is is avalible).
+        $('#remove-component .pizza-components-item').on('click', function () {
+            calculateComponentsRemove( $(this) );
+        });
+
+        //Calculate function.
         const calculate = () => {
             let sum = parseFloat( initialPrice );
             $('#add-component .pizza-components-item').each( function() {
@@ -30,6 +40,7 @@
             console.log(sum);
             refreshPriceHtml(sum);
         }
+
         //Refresh prices
         const refreshPriceHtml = (summ) => {
             let priceContainer = $(".product").find(".price");
@@ -41,8 +52,36 @@
             //}
         };
 
+        // Remove componet function.
+        const calculateComponentsRemove = (el) => {
+            if ( ! el.find( ".u-remove-component" ).length ) return;
+            
+            let componentId = el.attr( "data-component-id" );
+            const inputBaseValue = JSON.parse( inputBase.val() );
+            let modiFiedData = inputBaseValue.map((c) => {
+                let key = Object.keys(c)[0];
+                return c.hasOwnProperty(componentId) ? {[key]: !c[componentId]} : c; //was true? now false.
+            });
+            inputBase.val(JSON.stringify(modiFiedData));
+            refreshClasses(modiFiedData);
+            calculate();
+        };
+
+        // Refresh 
+        const refreshClasses = (data) => {
+            $("#remove-component .pizza-components-item").each(function () {
+                $(this).removeClass("active");
+            });
+
+            data.forEach((c) => {
+                let key = Object.keys(c)[0];
+                !c[key] &&
+                $(`[data-component-id=${key}]`)
+                    .closest(".pizza-components-item")
+                    .addClass("active");
+            });
+        };
 
     }
 
-    console.log(dataComponents);
 })(jQuery);

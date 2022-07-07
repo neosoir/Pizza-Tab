@@ -53,9 +53,18 @@ $data_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $data_json ) : _wp_
                 <?php endif; ?>
                 <?php if (!empty($data['pizza']['base'])) : ?>
                     <div id="remove-component" class="pizza-components-tab">
+                        <?php
+                        $pizza_base_input = [];
+                        foreach ($data['pizza']['base'] as $c) {
+                            $pizza_base_input[] = [$c['id'] => true];
+                        }
+                        $pizza_base_json = wp_json_encode($pizza_base_input);
+                        $pizza_base_attr = function_exists('wc_esc_json') ? wc_esc_json($pizza_base_json) : _wp_specialchars($pizza_base_json, ENT_QUOTES, 'UTF-8', true);
+                        ?>
+                        <input type="hidden" name="u-pizza-base" value="<?php echo $pizza_base_attr ?>">
                         <?php foreach ($data['pizza']['base'] as $c) : ?>
                             <?php if (! $c['visible']) continue; ?>
-                            <div class="pizza-components-item">
+                            <div class="pizza-components-item" data-component-id="<?php echo esc_attr( $c['id'] ) ?>">
                                 <?php if (!$c['required']) : ?>
                                     <a href="#" class="u-remove-component">
                                         <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
