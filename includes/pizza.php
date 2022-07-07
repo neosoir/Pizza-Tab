@@ -100,7 +100,7 @@ class U_Pizza {
 
             wp_enqueue_media();
             wp_enqueue_style('pizza-admin');
-            wp_enqueue_script('pizza-admin-settings', plugins_url('assets/js/adminPizzaSettings.js', U_PIZZA_DIR), ['jquery'], time(), true);
+            wp_enqueue_script('pizza-admin-settings', plugins_url('assets/js/adminPizzaSettings.min.js', U_PIZZA_DIR), ['jquery'], time(), true);
             wp_localize_script('pizza-admin-settings', 'U_PIZZA_DATA', [
                 'url' => plugins_url( '/assets/', U_PIZZA_DIR ),
             ]);
@@ -110,7 +110,7 @@ class U_Pizza {
             $pizza_components   = array_merge( ...wp_list_pluck($pizza_data, 'components') );
             wp_enqueue_media();
             wp_enqueue_style('pizza-admin');
-            wp_enqueue_script('pizza-admin-product', plugins_url('assets/js/adminPizzaProduct.js', U_PIZZA_DIR), ['jquery'], time(), true);
+            wp_enqueue_script('pizza-admin-product', plugins_url('assets/js/adminPizzaProduct.min.js', U_PIZZA_DIR), ['jquery'], time(), true);
             wp_localize_script('pizza-admin-product', 'U_PRODUCT_DATA', [
                 'url'               => plugins_url('/assets/', U_PIZZA_DIR),
                 'pizza_components'  => $pizza_components,
