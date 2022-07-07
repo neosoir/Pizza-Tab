@@ -19,7 +19,7 @@ class U_Pizza_Display {
         } 
         $pizza_product_data = get_post_meta( $product->get_id(), 'u_product_pizza_data', true );
         if ( $pizza_product_data ) {
-            wc_get_template( 'pizza/components.php', ['data' => $pizza_product_data ], '', U_PIZZA_PATH . 'templates/front/' );
+            wc_get_template( 'pizza/components.php', [ 'data' => $pizza_product_data, 'product' => $product ], '', U_PIZZA_PATH . 'templates/front/' );
         }
     }
 
@@ -27,6 +27,7 @@ class U_Pizza_Display {
     {
         wp_enqueue_style( 'pizza-front', plugins_url( 'assets/css/main.min.css', U_PIZZA_DIR ), [], '1.0.0', 'all' );
         wp_enqueue_script( 'pizza-front', plugins_url( 'assets/js/pizza-front.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
+        wp_register_script( 'pizza-simple', plugins_url( 'assets/js/pizza-simple.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
     }
 
 }

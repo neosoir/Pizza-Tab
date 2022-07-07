@@ -1,10 +1,21 @@
 <?php
-/* echo "<pre>";
-print_r($data);
-echo "</pre>"; */
-?>
 
-<div class="pizza_components_wrapper" >
+if ($product->is_type('simple')) {
+    wp_enqueue_script('pizza-simple');
+} elseif ($product->is_type('variable')) {
+    wp_enqueue_script('pizza-variable');
+}
+
+// echo "<pre>";
+// print_r($data);
+// echo "</pre>";
+
+$data_json = wp_json_encode( $data );
+$data_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $data_json ) : _wp_specialchars( $data_json, ENT_QUOTES, 'UTF-8', true );
+//$product_pizza = U_Pizza_Product::get_product($product);
+
+?>
+<div class="pizza_components_wrapper" data-pizza="<?php echo $data_attr; ?>" data-price="<?php echo $product->get_price(); ?>" data-product-id="<?php echo esc_attr(get_the_ID()); ?>">
     <?php if ($data['pizza']['enabled']) : ?>
         <div class="pizza-components-block">
             <div class="pizza-components-nav">
@@ -21,11 +32,11 @@ echo "</pre>"; */
                                 <div class="component-buttons" data-food-item="<?php echo esc_attr($c['id']); ?>">
                                     <?php
                                     u_pizza_woo_quantity_input([
-                                        'input_name' => 'ev_quantity[' . $c['id'] . ']',
-                                        'min_value' => 0,
-                                        'max_value' => 100,
-                                        'classes'      => ['input-text', 'component-qty', 'text'],
-                                        'input_value' => 0
+                                        'input_name'    => 'ev_quantity[' . $c['id'] . ']',
+                                        'min_value'     => 0,
+                                        'max_value'     => 100,
+                                        'classes'       => ['input-text', 'component-qty', 'text'],
+                                        'input_value'   => 0
                                     ]);
                                     ?>
                                 </div>

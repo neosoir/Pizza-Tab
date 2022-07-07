@@ -103,7 +103,7 @@
             },
         });
     });
-    
+
     //components tabs
     $(".pizza-components-nav").on("click", "a", function (e) {
         e.preventDefault();
@@ -116,4 +116,5 @@
         $(this).addClass("active");
         $(`${e.target.hash}`).addClass("fade-in");
     });
+    
 })(jQuery);
