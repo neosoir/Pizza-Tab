@@ -41,10 +41,14 @@ class U_Pizza_Display {
         wp_enqueue_script( 'pizza-fansybox', plugins_url( 'assets/js/jquery.fancybox.min.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
         wp_enqueue_script( 'pizza-front', plugins_url( 'assets/js/pizza-front.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
         wp_localize_script('pizza-front', 'PIZZA_FRONT_DATA', [
-            'url'               => plugins_url('/assets/', U_PIZZA_DIR),
-            'wc_symbol'         => get_woocommerce_currency_symbol(),
-            'price_position'    => get_option('woocommerce_currency_pos'),
-            'decimals'          => wc_get_price_decimals(),
+            'url'                   =>  plugins_url('/assets/', U_PIZZA_DIR),
+            'floor_default_text'    =>  apply_filters('u_pizza_template_empty_floor_text', __('Choose %s flour pizza', 'u-pizza')),
+            'floor_default_image'   =>  u_pizza_get_image_placeholder('empty_floor'),
+            'side_default_text'     =>  apply_filters('u_pizza_empty_side_text', __('Choose cheese', 'u-pizza')),
+            'side_default_image'    =>  u_pizza_get_image_placeholder('empty_side'),
+            'wc_symbol'             =>  get_woocommerce_currency_symbol(),
+            'price_position'        =>  get_option('woocommerce_currency_pos'),
+            'decimals'              =>  wc_get_price_decimals(),
         ]);
         wp_register_script( 'pizza-simple', plugins_url( 'assets/js/pizza-simple.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
     }
@@ -74,8 +78,6 @@ class U_Pizza_Display {
         else {
             $price = wc_price( wc_get_price_to_display( $product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()]) ) .  $product_pizza->get_price_suffix();
         }
-
-
         return $price;
     }
 

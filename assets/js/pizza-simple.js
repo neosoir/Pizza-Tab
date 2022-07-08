@@ -156,7 +156,7 @@
             inputFloors.val(JSON.stringify(selectedIdFloors));
             $(document.body)
                 .on("click", ".pizza-fancybox-floors .pizza-floor-item", function () {
-                    
+
                     let product_id = $(this).attr("data-floor");
                     let price = $(this).find(".u-pizza-price").html();
                     let title = $(this).find(".u-pizza-title").text();
@@ -204,12 +204,12 @@
                     );
                     const templateDefault = wp.template("pizza-floor-default");
                     const pizzaDefaultData = {
-                    name: PIZZA_FRONT_DATA.floor_default_text.replace(
-                        "%s",
-                        index + 1
-                    ),
-                    image: PIZZA_FRONT_DATA.floor_default_image,
-                    product_id: "",
+                        name: PIZZA_FRONT_DATA.floor_default_text.replace(
+                            "%s",
+                            index + 1
+                        ),
+                        image: PIZZA_FRONT_DATA.floor_default_image,
+                        product_id: "",
                     };
                     $(this)
                         .closest(".pizza-floors-selected__item")
@@ -226,6 +226,7 @@
         const calculate = () => {
             let sum = parseFloat( initialPrice );
 
+            // Calcuate delete components.
             if ( ( dataComponents.pizza.price_inc ) &&  ( $('.pizza-components-block').length ) ) {
                 const inputBaseValue = JSON.parse(inputBase.val());
                 let priceToExclude = 0;
@@ -240,6 +241,8 @@
                 });
                 sum = sum - priceToExclude;
             }
+
+            // Calculate add components.
             $('#add-component .pizza-components-item').each( function() {
                 let val = $(this).find('.component-qty').val();
                 let componentId = $(this)
@@ -252,7 +255,31 @@
                     sum += parseFloat( componentObject.price ) * parseInt( val )
                 }
             });
-            console.log(sum);
+
+            // Calculate floors part.
+            if (floorsEnabled) {
+                let floorsData = selectedIdFloors.filter((el, i) => i !== 0);
+                floorsData.forEach((el) => {
+                let priceFloor = parseFloat(
+                    $(`[data-floor=${el.id}]`).attr("data-floor-price")
+                );
+                sum += priceFloor;
+                });
+            }
+
+            // Calculate sides part.
+            if (sidesEnabled) {
+                if (selectedIdSides.length > 0) {
+                const findSide = Object.values(
+                    dataComponents.pizza.sides.components
+                ).find((el) => el.id == selectedIdSides[0].id);
+    
+                if (findSide) {
+                    summ += parseFloat(findSide.price);
+                }
+                }
+            }
+
             refreshPriceHtml(sum);
         }
 

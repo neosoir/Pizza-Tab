@@ -107,6 +107,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </div>
     <?php endif; ?>
 </div>
+
 <!-- Templating floors -->
 <script type="text/html" id="tmpl-pizza-floor-selected">
     <div class="pizza-floors-selected__item" data-product-id="{{{data.product_id}}}">
@@ -117,11 +118,10 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </a>
         <div class="pizza-floors-left">
             <img src="{{{data.image}}}" alt="">
-
         </div>
         <div class="pizza-floors-right">
             <span>{{{data.name}}}</span>
-            <span class="pizza-variable-price"> {{{data.price}}} </span>
+            <span class="pizza-variable-price">{{{data.price}}}</span>
         </div>
     </div>
 </script>
@@ -135,17 +135,13 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </a>
         <div class="pizza-floors-left">
             <img src="{{{data.image}}}" alt="">
-
         </div>
         <div class="pizza-floors-right">
-
-            <span class="pizza-text-placeholder">
-                {{{data.name}}}
-
-            </span>
+            <span class="pizza-text-placeholder">{{{data.name}}}</span>
         </div>
     </div>
 </script>
+
 <!-- Templating sides -->
 <script type="text/html" id="tmpl-pizza-side-selected">
     <div class="pizza-floors-selected__item pizza-sides-selected__item">
@@ -156,21 +152,18 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </a>
         <div class="pizza-floors-left">
             <img src="{{{data.image}}}" alt="">
-
         </div>
         <div class="pizza-floors-right">
             <span>{{{data.name}}}</span>
             <span>{{{data.price}}}</span>
-
         </div>
     </div>
 </script>
+
 <script type="text/html" id="tmpl-pizza-side-default">
     <div class="pizza-floors-selected__item pizza-sides-selected__item">
-
         <div class="pizza-floors-left">
             <img src="{{{data.image}}}" alt="">
-
         </div>
         <div class="pizza-floors-right">
             <span class="pizza-text-placeholder">{{{data.name}}}</span>
