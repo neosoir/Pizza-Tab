@@ -5,9 +5,11 @@
         $('.pizza_components_wrapper').attr('data-pizza')
     );
 
-    // Get the product price.
-    let initialPrice    = $('.pizza_components_wrapper').attr('data-price');
-    const inputBase     = $('input[name=u-pizza-base]');
+    // Varibles.
+    const inputBase         =   $('input[name=u-pizza-base]');
+    const floorsEnabled     =   dataComponents.pizza.floors.enabled;
+    const sidesEnabled      =   dataComponents.pizza.sides.enabled;
+    let initialPrice        =   $('.pizza_components_wrapper').attr('data-price');
 
     //
     if ( ( $('form.variations_form').length === 0 ) && ($('form.cart').length > 0 )  ) {
@@ -52,23 +54,23 @@
                         } 
                         else {
                             $(".pizza-floors-block", floorFancy).slick({
-                            slidesToShow: 4,
-                            infinite: false,
-                            arrows: false,
-                            responsive: [
-                                {
-                                breakpoint: 500,
-                                settings: {
-                                    slidesToShow: 3,
-                                },
-                                },
-                                {
-                                breakpoint: 380,
-                                settings: {
-                                    slidesToShow: 2,
-                                },
-                                },
-                            ],
+                                slidesToShow: 4,
+                                infinite: false,
+                                arrows: false,
+                                responsive: [
+                                    {
+                                        breakpoint: 500,
+                                        settings: {
+                                            slidesToShow: 3,
+                                        },
+                                    },
+                                    {
+                                        breakpoint: 380,
+                                        settings: {
+                                            slidesToShow: 2,
+                                        },
+                                    },
+                                ],
                             });
                         }
                     },
@@ -175,12 +177,12 @@
         //Refresh prices
         const refreshPriceHtml = (summ) => {
             let priceContainer = $(".product").find(".price");
-            //let priceFloorContainer = $(document.body).find(".floors-total-price");
+            let priceFloorContainer = $(document.body).find(".floors-total-price");
 
             priceContainer.html(u_wc_price(summ));
-            //if (floorsEnabled || sidesEnabled) {
-            //priceFloorContainer.html(u_wc_price(summ));
-            //}
+            if (floorsEnabled || sidesEnabled) {
+                priceFloorContainer.html(u_wc_price(summ));
+            }
         };
 
         // Remove componet function.

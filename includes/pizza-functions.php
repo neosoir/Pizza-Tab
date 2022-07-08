@@ -80,6 +80,9 @@ function u_pizza_get_default_data()
  * @return array
  */
 
+/**
+ * 
+ */
 function u_pizza_sides()
 {
     $pizza_data = get_option('u_pizza_data');
@@ -92,6 +95,10 @@ function u_pizza_sides()
     });
     return $sides_components;
 }
+
+/**
+ * 
+ */
 function u_flatten_array( $array )
 {
     $newArray = [];
@@ -185,4 +192,29 @@ function u_pizza_woo_quantity_input($args = array(), $product = null, $echo = tr
         return ob_get_clean();
     }
 }
+
+/**
+ * Get image placeholders from Settings page
+ */
+function u_pizza_get_image_placeholder($image)
+{
+    switch ($image) {
+        case 'empty_floor':
+            return plugins_url('assets/images/pizza-floor.png', U_PIZZA_DIR);
+        case 'empty_side':
+            return plugins_url('assets/images/pizza-side.png', U_PIZZA_DIR);
+    }
+    return false;
+}
+/**
+ * Check if tipps enabled
+ */
+/* function u_pizza_tipps_enabled()
+{
+    $tipps_enabled = get_option('pizza_tipps');
+    if (!$tipps_enabled) {
+        return false;
+    }
+    return $tipps_enabled === 'yes' ? true : false;
+} */
 
