@@ -7,10 +7,15 @@ class U_Pizza_Cart
     {
         add_filter('woocommerce_add_cart_item_data', [$this, 'add_item_data'], 10, 4);
         add_action('woocommerce_before_calculate_totals', [$this, 'calculate_totals'], 10, 1);
+        add_filter('woocommerce_get_cart_item_from_session', [$this, 'get_cart_data_from_session'], 10, 3);
 
         //add_action('woocommerce_before_calculate_totals', [$this, 'debug_cart'], 20, 1);
 
     }
+
+    /**
+     * 
+     */
     public function add_item_data($cart_item_data, $product_id, $variation_id, $quantity)
     {
         if ( u_is_pizza_product( $product_id ) ) {
@@ -62,7 +67,8 @@ class U_Pizza_Cart
                 }
             }
 
-            /* if (isset($_POST['pizza-floors-data'])) {
+            /* 
+            if (isset($_POST['pizza-floors-data'])) {
                 $pizza_floors = json_decode(wp_unslash(sanitize_text_field($_POST['pizza-floors-data'])), true);
                 if (!empty($pizza_floors)) {
                     foreach ($pizza_floors as $product) {
@@ -100,7 +106,7 @@ class U_Pizza_Cart
                     }
                 }
             }
- */
+            */
 
             $cart_item_data['u_pizza_config'] = $pizza_config;
 
@@ -108,6 +114,9 @@ class U_Pizza_Cart
         return $cart_item_data;
     }
 
+    /**
+     * 
+     */
     public function calculate_totals($cart_object)
     {
         //$cart_object === WC()->cart
@@ -154,6 +163,17 @@ class U_Pizza_Cart
                 $cart_item['data']->set_price( $price );
             }
         }
+    }
+
+    /**
+     * 
+     */
+    public function get_cart_data_from_session($cart_item, $cart_session_item, $key)
+    {
+        if (isset($cart_session_item['u_pizza_config'])) {
+            $cart_item['u_pizza_config'] = $cart_session_item['u_pizza_config'];
+        }
+        return $cart_item;
     }
 
     public function debug_cart()

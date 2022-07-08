@@ -9,8 +9,15 @@ class U_Pizza_Display {
         add_action( 'woocommerce_before_add_to_cart_button', [$this, 'output_pizza_components']);
         add_action( 'wp_enqueue_scripts', [$this, 'enqueue'] );
         add_filter( 'woocommerce_get_price_html', [$this, 'change_price'], 10, 2 );
+
+        // update price in mini cart
+        add_filter('woocommerce_cart_item_price', [$this, 'modify_price_mini_cart'], 10, 3);
+
     }
 
+    /**
+     * 
+     */
     public function output_pizza_components()
     {
         global $product;
@@ -23,6 +30,9 @@ class U_Pizza_Display {
         }
     }
 
+    /**
+     * 
+     */
     public function enqueue()
     {
         wp_enqueue_style( 'pizza-front', plugins_url( 'assets/css/main.min.css', U_PIZZA_DIR ), [], '1.0.0', 'all' );
@@ -36,6 +46,9 @@ class U_Pizza_Display {
         wp_register_script( 'pizza-simple', plugins_url( 'assets/js/pizza-simple.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
     }
 
+    /**
+     * 
+     */
     public function change_price($price, $product)
     {
         ///get parent id if variation product type
@@ -54,6 +67,56 @@ class U_Pizza_Display {
 
 
         return $price;
+    }
+
+        /**
+     * Modify cart product price in mini cart and on cart page
+     */
+    public function modify_price_mini_cart($price, $cart_item, $cart_item_key)
+    {
+        $product_id = $cart_item['product_id'];
+        if (!u_is_pizza_product($product_id)) {
+            return $price;
+        }
+        $product_sid = $cart_item['variation_id'] ? $cart_item['variation_id'] : $cart_item['product_id'];
+
+        $product_pizza_data = get_post_meta($product_id, 'u_product_pizza_data', true);
+        $price = U_Pizza_Product::get_product($product_sid)->get_price();
+
+        if (isset($cart_item['u_pizza_config']['pizza']['extra'])) {
+            $pizza_extra = $product_pizza_data['pizza']['extra'];
+            foreach ($cart_item['u_pizza_config']['pizza']['extra'] as $component) {
+                foreach ($pizza_extra as $c) {
+                    if ((int) $component['id'] === (int) $c['id']) {
+                        $price += floatval($c['price']) * intval($component['quantity']);
+                    }
+                }
+            }
+        }
+        
+        if (isset($cart_item['u_pizza_config']['pizza']['base'])) {
+            if (U_Pizza_Product::get_product($product_id)->is_price_inc()) {
+                $selected_base = $cart_item['u_pizza_config']['pizza']['base'];
+                $pizza_base = $product_pizza_data['pizza']['base'];
+
+                if (!empty($pizza_base)) {
+                    foreach ($pizza_base as $component) {
+
+                        $found = false;
+                        foreach ($selected_base as $selected_component) {
+                            if ((int) $component['id'] === (int) $selected_component['id']) {
+                                $found = true;
+                            }
+                        }
+                        if (!$found) {
+                            $price -= floatval($component['price']);
+                        }
+                    }
+                }
+            }
+        }
+
+        return wc_price($price);
     }
 
 }
