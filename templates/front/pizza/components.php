@@ -107,3 +107,73 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </div>
     <?php endif; ?>
 </div>
+<!-- Templating floors -->
+<script type="text/html" id="tmpl-pizza-floor-selected">
+    <div class="pizza-floors-selected__item" data-product-id="{{{data.product_id}}}">
+        <a href="#" class="u-remove-floor">
+            <svg width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.00426 3.44918L7.97954 0H9.90622L5.98465 4.46291L10 9H8.05627L5.00426 5.48901L1.93521 9H0L4.02387 4.46291L0.0937766 0H2.01194L5.00426 3.44918Z" fill="#C3C3C3" />
+            </svg>
+        </a>
+        <div class="pizza-floors-left">
+            <img src="{{{data.image}}}" alt="">
+
+        </div>
+        <div class="pizza-floors-right">
+            <span>{{{data.name}}}</span>
+            <span class="pizza-variable-price"> {{{data.price}}} </span>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="tmpl-pizza-floor-default">
+    <div class="pizza-floors-selected__item" data-product-id="">
+        <a href="#" class="u-remove-floor">
+            <svg width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.00426 3.44918L7.97954 0H9.90622L5.98465 4.46291L10 9H8.05627L5.00426 5.48901L1.93521 9H0L4.02387 4.46291L0.0937766 0H2.01194L5.00426 3.44918Z" fill="#C3C3C3" />
+            </svg>
+        </a>
+        <div class="pizza-floors-left">
+            <img src="{{{data.image}}}" alt="">
+
+        </div>
+        <div class="pizza-floors-right">
+
+            <span class="pizza-text-placeholder">
+                {{{data.name}}}
+
+            </span>
+        </div>
+    </div>
+</script>
+<!-- Templating sides -->
+<script type="text/html" id="tmpl-pizza-side-selected">
+    <div class="pizza-floors-selected__item pizza-sides-selected__item">
+        <a href="#" class="u-remove-side">
+            <svg width="10" height="9" viewBox="0 0 10 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.00426 3.44918L7.97954 0H9.90622L5.98465 4.46291L10 9H8.05627L5.00426 5.48901L1.93521 9H0L4.02387 4.46291L0.0937766 0H2.01194L5.00426 3.44918Z" fill="#C3C3C3" />
+            </svg>
+        </a>
+        <div class="pizza-floors-left">
+            <img src="{{{data.image}}}" alt="">
+
+        </div>
+        <div class="pizza-floors-right">
+            <span>{{{data.name}}}</span>
+            <span>{{{data.price}}}</span>
+
+        </div>
+    </div>
+</script>
+<script type="text/html" id="tmpl-pizza-side-default">
+    <div class="pizza-floors-selected__item pizza-sides-selected__item">
+
+        <div class="pizza-floors-left">
+            <img src="{{{data.image}}}" alt="">
+
+        </div>
+        <div class="pizza-floors-right">
+            <span class="pizza-text-placeholder">{{{data.name}}}</span>
+        </div>
+    </div>
+</script>

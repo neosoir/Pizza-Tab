@@ -156,15 +156,15 @@
             inputFloors.val(JSON.stringify(selectedIdFloors));
             $(document.body)
                 .on("click", ".pizza-fancybox-floors .pizza-floor-item", function () {
+                    
                     let product_id = $(this).attr("data-floor");
                     let price = $(this).find(".u-pizza-price").html();
                     let title = $(this).find(".u-pizza-title").text();
-
                     let image = $(this).find("img").attr("src");
-
                     let findElement = selectedIdFloors.findIndex(
                         (el) => el.id === product_id
                     );
+
                     if (findElement !== -1) {
                         return;
                     }
@@ -181,6 +181,7 @@
                         {id: product_id, position: Math.min(...templateIndexes)}, //if positionIndexes = [1,2], then templateIndexes = [3, 4, 5, 6, 7] and min will be 3
                     ];
                     inputFloors.val(JSON.stringify(selectedIdFloors));
+                    // Add to floor left seccion.
                     const templateSelected = wp.template("pizza-floor-selected");
                     const pizzaSelectedData = {
                         name: title,
