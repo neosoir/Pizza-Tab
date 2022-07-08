@@ -59,7 +59,14 @@ class U_Pizza_Display {
         $product_pizza  = U_Pizza_Product::get_product($product);
         $price          = $product_pizza->get_price();
         if ($product_pizza->is_on_sale()) {
-            $price = wc_format_sale_price(wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_regular_price()]), wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()])) . $product_pizza->get_price_suffix();
+            $price = wc_format_sale_price(
+                        wc_get_price_to_display(
+                            $product_pizza->get_wc_product(), ['price' => $product_pizza->get_regular_price()]
+                        ), 
+                        wc_get_price_to_display(
+                            $product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()]
+                        ),
+                    ) . $product_pizza->get_price_suffix();
         } 
         else {
             $price = wc_price( wc_get_price_to_display( $product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()]) ) .  $product_pizza->get_price_suffix();

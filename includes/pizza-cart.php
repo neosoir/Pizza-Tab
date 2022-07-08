@@ -14,7 +14,7 @@ class U_Pizza_Cart
     }
 
     /**
-     * 
+     * Add data to cart process.
      */
     public function add_item_data($cart_item_data, $product_id, $variation_id, $quantity)
     {
