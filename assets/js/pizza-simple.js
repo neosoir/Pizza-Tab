@@ -25,7 +25,8 @@
         //Calculate function.
         const calculate = () => {
             let sum = parseFloat( initialPrice );
-            if ( ( dataComponents.pizza.price_inc ) &&  ( $('.pizza-componets-block').length ) ) {
+
+            if ( ( dataComponents.pizza.price_inc ) &&  ( $('.pizza-components-block').length ) ) {
                 const inputBaseValue = JSON.parse(inputBase.val());
                 let priceToExclude = 0;
                 Object.values(dataComponents.pizza.base).map((component) => {
@@ -37,19 +38,19 @@
                     }
                   });
                 });
-                summ = summ - priceToExclude;
+                sum = sum - priceToExclude;
             }
             $('#add-component .pizza-components-item').each( function() {
                 let val = $(this).find('.component-qty').val();
                 let componentId = $(this)
                     .find('.component-buttons')
                     .attr('data-food-item');
-                    let componentObject = Object.values( dataComponents.pizza.extra ).find(
-                        (component) => component.id === componentId
-                    );
-                    if ( componentObject !== undefined ) {
-                        sum += parseFloat( componentObject.price ) * parseInt( val )
-                    }
+                let componentObject = Object.values( dataComponents.pizza.extra ).find(
+                    (component) => component.id === componentId
+                );
+                if ( componentObject !== undefined ) {
+                    sum += parseFloat( componentObject.price ) * parseInt( val )
+                }
             });
             console.log(sum);
             refreshPriceHtml(sum);
