@@ -34,6 +34,12 @@ $wc_products        = wc_get_products([
         <!-- For Pizza -->
         <div id="pizza_block_1">
 
+            <!-- Extra price component -->
+            <div class="form-group-full form-price-inc">
+                <input type="checkbox" id="price_inc" name="price_inc" <?php $pizza_product_data ? checked($pizza_product_data['pizza']['price_inc'], true) : ''; ?>>
+                <label for="price_inc"><?php esc_html_e('Enable price include', 'u-pizza'); ?></label>
+            </div>
+
             <!-- Select base and extra components -->
             <div>
                 <div class="form-group">
