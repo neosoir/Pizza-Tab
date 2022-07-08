@@ -12,10 +12,10 @@ if ($product->is_type('simple')) {
 
 $data_json = wp_json_encode( $data );
 $data_attr = function_exists( 'wc_esc_json' ) ? wc_esc_json( $data_json ) : _wp_specialchars( $data_json, ENT_QUOTES, 'UTF-8', true );
-//$product_pizza = U_Pizza_Product::get_product($product);
+$product_pizza = U_Pizza_Product::get_product($product);
 
 ?>
-<div class="pizza_components_wrapper" data-pizza="<?php echo $data_attr; ?>" data-price="<?php echo $product->get_price(); ?>" data-product-id="<?php echo esc_attr(get_the_ID()); ?>">
+<div class="pizza_components_wrapper" data-pizza="<?php echo $data_attr; ?>" data-price="<?php echo $product_pizza->get_price(); ?>" data-product-id="<?php echo esc_attr(get_the_ID()); ?>">
     <?php if ($data['pizza']['enabled']) : ?>
         <div class="pizza-components-block">
             <div class="pizza-components-nav">

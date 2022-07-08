@@ -25,6 +25,20 @@
         //Calculate function.
         const calculate = () => {
             let sum = parseFloat( initialPrice );
+            if ( ( dataComponents.pizza.price_inc ) &&  ( $('.pizza-componets-block').length ) ) {
+                const inputBaseValue = JSON.parse(inputBase.val());
+                let priceToExclude = 0;
+                Object.values(dataComponents.pizza.base).map((component) => {
+                  inputBaseValue.map((c) => {
+                    let key = Object.keys(c)[0];
+      
+                    if (key === component.id && !c[key]) {
+                      priceToExclude += parseFloat(component.price);
+                    }
+                  });
+                });
+                summ = summ - priceToExclude;
+            }
             $('#add-component .pizza-components-item').each( function() {
                 let val = $(this).find('.component-qty').val();
                 let componentId = $(this)
