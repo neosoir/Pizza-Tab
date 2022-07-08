@@ -5,14 +5,25 @@
         $('.pizza_components_wrapper').attr('data-pizza')
     );
 
-    // Varibles.
+    // Inputs.
     const inputBase         =   $('input[name=u-pizza-base]');
+    const inputFloors       =   $("input[name=pizza-floors-data]");
+    const inputSides        =   $("input[name=pizza-sides-data]");
+
     const floorsEnabled     =   dataComponents.pizza.floors.enabled;
     const sidesEnabled      =   dataComponents.pizza.sides.enabled;
     let initialPrice        =   $('.pizza_components_wrapper').attr('data-price');
 
     //
     if ( ( $('form.variations_form').length === 0 ) && ($('form.cart').length > 0 )  ) {
+
+        let selectedIdFloors = [
+            {
+                id: $(".pizza_components_wrapper").attr("data-product-id"),
+                position: 1,
+            },
+        ];
+        let selectedIdSides = [];
 
         // Calculate the product price depending the components quantity.
         $(".component-buttons").on("click", ".plus, .minus", function () {
@@ -139,6 +150,76 @@
                 $.fancybox.close();
             });
         });
+
+        //Templating floors
+        const templateUFloors = () => {
+            inputFloors.val(JSON.stringify(selectedIdFloors));
+            $(document.body)
+                .on("click", ".pizza-fancybox-floors .pizza-floor-item", function () {
+                    let product_id = $(this).attr("data-floor");
+                    let price = $(this).find(".u-pizza-price").html();
+                    let title = $(this).find(".u-pizza-title").text();
+
+                    let image = $(this).find("img").attr("src");
+
+                    let findElement = selectedIdFloors.findIndex(
+                        (el) => el.id === product_id
+                    );
+                    if (findElement !== -1) {
+                        return;
+                    }
+                    //Only three floors can be selected
+                    if (selectedIdFloors.length >= 3) return;
+                    //Get array of positions. Positions need for position elements in DOM
+                    let positionIndexes = selectedIdFloors.map((l) => l.position);
+                    //Get array with positions which doesnt exists in positionIndexes array. For example, if positionIndexes = [1,2], then templateIndexes = [3, 4, 5, 6, 7]. This is for getting next number for position
+                    let templateIndexes = [1, 2, 3, 4, 5, 6, 7].filter(
+                        (i) => !positionIndexes.includes(i)
+                    );
+                    selectedIdFloors = [
+                        ...selectedIdFloors,
+                        {id: product_id, position: Math.min(...templateIndexes)}, //if positionIndexes = [1,2], then templateIndexes = [3, 4, 5, 6, 7] and min will be 3
+                    ];
+                    inputFloors.val(JSON.stringify(selectedIdFloors));
+                    const templateSelected = wp.template("pizza-floor-selected");
+                    const pizzaSelectedData = {
+                        name: title,
+                        image: image,
+                        product_id: product_id,
+                        price: price,
+                    };
+                    $(".pizza-fancybox-floors .pizza-floors-selected__item")
+                        .eq(Math.min(...templateIndexes) - 1)
+                        .replaceWith(templateSelected(pizzaSelectedData));
+                    calculate();
+                })
+                .on("click", ".u-remove-floor", function (e) {
+                    e.preventDefault();
+                    let product_id = $(this)
+                        .closest(".pizza-floors-selected__item")
+                        .attr("data-product-id");
+                    let index = $(".pizza-floors-selected__item").index(
+                        $(`[data-product-id=${product_id}]`)
+                    );
+                    const templateDefault = wp.template("pizza-floor-default");
+                    const pizzaDefaultData = {
+                    name: PIZZA_FRONT_DATA.floor_default_text.replace(
+                        "%s",
+                        index + 1
+                    ),
+                    image: PIZZA_FRONT_DATA.floor_default_image,
+                    product_id: "",
+                    };
+                    $(this)
+                        .closest(".pizza-floors-selected__item")
+                        .replaceWith(templateDefault(pizzaDefaultData));
+                    selectedIdFloors = selectedIdFloors.filter(
+                        (el) => el.id !== product_id
+                    );
+                    inputFloors.val(JSON.stringify(selectedIdFloors));
+                    calculate();
+                });
+        };
 
         //Calculate function.
         const calculate = () => {
