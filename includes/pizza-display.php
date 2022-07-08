@@ -35,7 +35,10 @@ class U_Pizza_Display {
      */
     public function enqueue()
     {
+        wp_enqueue_style( 'pizza-fansybox', plugins_url( 'assets/css/jquery.fancybox.min.css', U_PIZZA_DIR ), [], '1.0.0', 'all' );
         wp_enqueue_style( 'pizza-front', plugins_url( 'assets/css/main.min.css', U_PIZZA_DIR ), [], '1.0.0', 'all' );
+
+        wp_enqueue_script( 'pizza-fansybox', plugins_url( 'assets/js/jquery.fancybox.min.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
         wp_enqueue_script( 'pizza-front', plugins_url( 'assets/js/pizza-front.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
         wp_localize_script('pizza-front', 'PIZZA_FRONT_DATA', [
             'url'               => plugins_url('/assets/', U_PIZZA_DIR),

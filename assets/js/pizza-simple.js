@@ -22,6 +22,122 @@
             calculateComponentsRemove( $(this) );
         });
 
+        // handle fancybox for floors
+        $("#pizza-floor-button").on("click", function (e) {
+            e.preventDefault();
+            $.fancybox.open({
+                src: "#u-pizza-floors-fancybox",
+                type: "inline",
+                touch: false,
+                opts: {
+                    afterShow: function (instance, current) {
+                    // console.info("done!");
+                    let floorFancy = $(document.body).find(
+                        "#u-pizza-floors-fancybox"
+                    );
+                        if (window.matchMedia("(min-width: 768px)").matches) {
+                            if (floorFancy.height() > window.innerHeight - 100) {
+                                floorFancy.css("border-width", "0");
+                                $(".pizza-floors-block", floorFancy).slimScroll({
+                                    height: window.innerHeight - 100,
+                                    railVisible: true,
+                                    alwaysVisible: true,
+                                    size: "6px",
+                                    color: "#FF0329",
+                                    railColor: "#EAEAEA",
+                                    railOpacity: 1,
+                                    wheelStep: 5,
+                                });
+                            }
+                        } 
+                        else {
+                            $(".pizza-floors-block", floorFancy).slick({
+                            slidesToShow: 4,
+                            infinite: false,
+                            arrows: false,
+                            responsive: [
+                                {
+                                breakpoint: 500,
+                                settings: {
+                                    slidesToShow: 3,
+                                },
+                                },
+                                {
+                                breakpoint: 380,
+                                settings: {
+                                    slidesToShow: 2,
+                                },
+                                },
+                            ],
+                            });
+                        }
+                    },
+                },
+            });
+            templateUFloors();
+            $(".choose-floor-button").on("click", function (e) {
+                e.preventDefault();
+                $.fancybox.close();
+            });
+        });
+        
+        // handle fancybox for sides
+        $("#pizza-sides-button").on("click", function (e) {
+            e.preventDefault();
+            $.fancybox.open({
+                src: "#u-pizza-sides-fancybox",
+                type: "inline",
+                touch: false,
+                opts: {
+                    afterShow: function (instance, current) {
+                        // console.info("done!");
+                        let sideFancy = $(document.body).find("#u-pizza-sides-fancybox");
+                        if (window.matchMedia("(min-width: 768px)").matches) {
+                            if (sideFancy.height() > window.innerHeight - 100) {
+                                sideFancy.css("border-width", "0");
+                                $(".pizza-floors-block", sideFancy).slimScroll({
+                                    height: window.innerHeight - 100,
+                                    railVisible: true,
+                                    alwaysVisible: true,
+                                    size: "6px",
+                                    color: "#FF0329",
+                                    railColor: "#EAEAEA",
+                                    railOpacity: 1,
+                                    wheelStep: 5,
+                                });
+                            }
+                        } 
+                        else {
+                            $(".pizza-floors-block", sideFancy).slick({
+                                slidesToShow: 4,
+                                infinite: false,
+                                arrows: false,
+                                responsive: [
+                                    {
+                                        breakpoint: 500,
+                                        settings: {
+                                            slidesToShow: 3,
+                                        },
+                                    },
+                                    {
+                                        breakpoint: 380,
+                                        settings: {
+                                            slidesToShow: 2,
+                                        },
+                                    },
+                                ],
+                            });
+                        }
+                    },
+                },
+            });
+            templateUSides();
+            $(".choose-floor-button").on("click", function (e) {
+                e.preventDefault();
+                $.fancybox.close();
+            });
+        });
+
         //Calculate function.
         const calculate = () => {
             let sum = parseFloat( initialPrice );
