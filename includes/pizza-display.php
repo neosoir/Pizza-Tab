@@ -81,8 +81,8 @@ class U_Pizza_Display {
         return $price;
     }
 
-        /**
-     * Modify cart product price in mini cart and on cart page
+    /**
+     * Modify cart product price in mini cart and on cart page.
      */
     public function modify_price_mini_cart($price, $cart_item, $cart_item_key)
     {
@@ -95,6 +95,7 @@ class U_Pizza_Display {
         $product_pizza_data = get_post_meta($product_id, 'u_product_pizza_data', true);
         $price = U_Pizza_Product::get_product($product_sid)->get_price();
 
+        // Extra components
         if (isset($cart_item['u_pizza_config']['pizza']['extra'])) {
             $pizza_extra = $product_pizza_data['pizza']['extra'];
             foreach ($cart_item['u_pizza_config']['pizza']['extra'] as $component) {
@@ -106,6 +107,7 @@ class U_Pizza_Display {
             }
         }
         
+        // Base components.
         if (isset($cart_item['u_pizza_config']['pizza']['base'])) {
             if (U_Pizza_Product::get_product($product_id)->is_price_inc()) {
                 $selected_base = $cart_item['u_pizza_config']['pizza']['base'];
@@ -123,6 +125,20 @@ class U_Pizza_Display {
                         if (!$found) {
                             $price -= floatval($component['price']);
                         }
+                    }
+                }
+            }
+        }
+
+        // Floors components.
+        if ( isset( $cart_item['u_pizza_config']['pizza']['floors'] ) ) {
+            $pizza_floors = $product_pizza_data['pizza']['floors']['components'];
+            foreach ($cart_item['u_pizza_config']['pizza']['floors'] as $component) {
+                foreach ($pizza_floors as $floor_id) {
+                    if ((int) $component['id'] === (int) $floor_id) {
+                        //skip main product (first floor)
+                        if ((int) $product_id === (int) $floor_id) continue;
+                        $price +=  floatval($component['price']);
                     }
                 }
             }

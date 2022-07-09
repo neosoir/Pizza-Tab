@@ -67,7 +67,7 @@ class U_Pizza_Cart
                 }
             }
 
-            /* 
+            // Floor components.
             if (isset($_POST['pizza-floors-data'])) {
                 $pizza_floors = json_decode(wp_unslash(sanitize_text_field($_POST['pizza-floors-data'])), true);
                 if (!empty($pizza_floors)) {
@@ -75,16 +75,16 @@ class U_Pizza_Cart
                         $pizza_floor_product = wc_get_product($product['id']);
                         if ($pizza_floor_product) {
                             $pizza_config['pizza']['floors'][]  = [
-                                'id' => $pizza_floor_product->get_id(),
-                                'name' => $pizza_floor_product->get_name(),
-                                'image_id' => $pizza_floor_product->get_image_id(),
-                                'price' => U_Pizza_Product::get_product($pizza_floor_product)->get_price()
+                                'id'        =>  $pizza_floor_product->get_id(),
+                                'name'      =>  $pizza_floor_product->get_name(),
+                                'image_id'  =>  $pizza_floor_product->get_image_id(),
+                                'price'     =>  U_Pizza_Product::get_product($pizza_floor_product)->get_price()
                             ];
                         }
                     }
                 }
             }
-
+            /*
             if (isset($_POST['pizza-sides-data'])) {
                 $pizza_sides = json_decode(wp_unslash(sanitize_text_field($_POST['pizza-sides-data'])), true);
                 if (!empty($pizza_sides)) {
@@ -160,6 +160,19 @@ class U_Pizza_Cart
                     }
                 }
 
+                // For floor components
+                if ( isset( $cart_item['u_pizza_config']['pizza']['floors'] ) ) {
+                    $pizza_floors = $product_pizza_data['pizza']['floors']['components'];
+                    foreach ($cart_item['u_pizza_config']['pizza']['floors'] as $component) {
+                        foreach ($pizza_floors as $floor_id) {
+                            if ((int) $component['id'] === (int) $floor_id) {
+                                //skip main product (first floor)
+                                if ((int) $product_id === (int) $floor_id) continue;
+                                $price +=  floatval($component['price']);
+                            }
+                        }
+                    }
+                }
                 $cart_item['data']->set_price( $price );
             }
         }
