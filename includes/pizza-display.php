@@ -156,6 +156,19 @@ class U_Pizza_Display {
             }
         }
 
+        // For dish section.
+        if (isset($cart_item['u_pizza_config']['dish']['components'])) {
+
+            $dish_add = $product_pizza_data['dish']['components'];
+            foreach ($cart_item['u_pizza_config']['dish']['components'] as $component) {
+                foreach ($dish_add as $add_component) {
+                    if ((int) $component['id'] === (int) $add_component['id']) {
+                        $price +=  floatval($add_component['price']) * intval($component['quantity']);
+                    }
+                }
+            }
+        }
+
         return wc_price($price);
     }
 

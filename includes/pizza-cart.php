@@ -23,6 +23,28 @@ class U_Pizza_Cart
             $pizza_config          = [];
             $product_pizza_data     = get_post_meta( $product_id, 'u_product_pizza_data', true );
 
+            // Dish section
+            if (isset($_POST['evc_quantity']) && !empty($_POST['evc_quantity'])) {
+                foreach (wc_clean($_POST['evc_quantity']) as $component_id => $quantity) {
+                    if ($quantity == 0) {
+                        continue;
+                    }
+                    foreach ($product_pizza_data['dish']['components'] as $component) {
+                        if ((int) $component['id'] === $component_id) {
+                            $pizza_config['dish']['components'][] = [
+                                'id' => $component['id'],
+                                'name' => $component['name'],
+                                'quantity' => $quantity,
+                                'price' =>  $component['price'],
+                                'weight' =>  $component['weight'],
+                                'description' =>  $component['description'],
+                                'image' =>  $component['image']
+                            ];
+                        }
+                    }
+                }
+            }
+
             // Extra components
             if ( (isset( $_POST['ev_quantity'] ) ) && ( ! empty( $_POST['ev_quantity'] ) ) ) {
                 foreach ( wc_clean( $_POST['ev_quantity'] ) as $componet_id => $quantity ) {
@@ -125,6 +147,19 @@ class U_Pizza_Cart
                 $product_pizza_data     =   get_post_meta($product_id, 'u_product_pizza_data', true);
                 $price                  =   U_Pizza_Product::get_product($product_sid)->get_price();
 
+                // For dish section.
+                if (isset($cart_item['u_pizza_config']['dish']['components'])) {
+
+                    $dish_add = $product_pizza_data['dish']['components'];
+                    foreach ($cart_item['u_pizza_config']['dish']['components'] as $component) {
+                        foreach ($dish_add as $add_component) {
+                            if ((int) $component['id'] === (int) $add_component['id']) {
+                                $price +=  floatval($add_component['price']) * intval($component['quantity']);
+                            }
+                        }
+                    }
+                }
+
                 // For extra components.
                 if ( isset( $cart_item['u_pizza_config']['pizza']['extra'] ) ) {
                     $pizza_extra = $product_pizza_data['pizza']['extra'];
@@ -183,7 +218,7 @@ class U_Pizza_Cart
                         }
                     }
                 }
-                
+
                 $cart_item['data']->set_price( $price );
             }
         }
