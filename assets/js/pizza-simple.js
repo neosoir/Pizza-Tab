@@ -231,7 +231,6 @@
                     let price       = $(this).find(".u-pizza-price").html();
                     let title       = $(this).find(".u-pizza-title").text();
                     let image       = $(this).find("img").attr("src");
-
                     selectedIdSides = [{id: side_id}];
                     inputSides.val(JSON.stringify(selectedIdSides));
                     const templateSelected = wp.template("pizza-side-selected");
