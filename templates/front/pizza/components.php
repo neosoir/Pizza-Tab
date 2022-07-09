@@ -90,18 +90,14 @@ $product_pizza = U_Pizza_Product::get_product($product);
                 <input type="hidden" name="pizza-floors-data" value="">
                 <button class="u-pizza-button" id="pizza-floor-button"><?php esc_html_e('Add floor', 'u-pizza'); ?></button>
                 <div class="pizza-fancybox" id="u-pizza-floors-fancybox" style="display: none;">
-                    <?php
-                    wc_get_template('pizza/floors.php', ['data' => $data, 'product' => $product], '', U_PIZZA_PATH . 'templates/front/');
-                    ?>
+                    <?php wc_get_template('pizza/floors.php', ['data' => $data, 'product' => $product], '', U_PIZZA_PATH . 'templates/front/'); ?>
                 </div>
             <?php endif; ?>
             <?php if ($data['pizza']['sides']['enabled']) : ?>
                 <input type="hidden" name="pizza-sides-data" value="">
                 <button class="u-pizza-button" id="pizza-sides-button"><?php esc_html_e('Choose side', 'u-pizza'); ?></button>
                 <div class="pizza-fancybox" id="u-pizza-sides-fancybox" style="display: none;">
-                    <?php
-                    wc_get_template('pizza/sides.php', ['data' => $data, 'product' => $product], '', U_PIZZA_PATH . 'templates/front/');
-                    ?>
+                    <?php wc_get_template('pizza/sides.php', ['data' => $data, 'product' => $product], '', U_PIZZA_PATH . 'templates/front/'); ?>
                 </div>
             <?php endif; ?>
         </div>

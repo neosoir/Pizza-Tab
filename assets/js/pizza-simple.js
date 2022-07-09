@@ -222,6 +222,45 @@
                 });
         };
 
+        //Templating Sides components
+        const templateUSides = () => {
+            inputSides.val(JSON.stringify(selectedIdSides));
+            $(document.body)
+                .on("click", ".pizza-fancybox-sides .pizza-floor-item", function () {
+                    let side_id     = $(this).attr("data-side-id");
+                    let price       = $(this).find(".u-pizza-price").html();
+                    let title       = $(this).find(".u-pizza-title").text();
+                    let image       = $(this).find("img").attr("src");
+
+                    selectedIdSides = [{id: side_id}];
+                    inputSides.val(JSON.stringify(selectedIdSides));
+                    const templateSelected = wp.template("pizza-side-selected");
+                    const pizzaSelectedData = {
+                        name: title,
+                        image: image,
+                        price: price,
+                    };
+                    $(".pizza-fancybox-sides .pizza-sides-selected__item").replaceWith(
+                        templateSelected(pizzaSelectedData)
+                    );
+                    calculate();
+                })
+                .on("click", ".u-remove-side", function (e) {
+                    e.preventDefault();
+                    const templateDefault = wp.template("pizza-side-default");
+                    const pizzaDefaultData = {
+                        name: PIZZA_FRONT_DATA.side_default_text,
+                        image: PIZZA_FRONT_DATA.side_default_image,
+                    };
+                    $(this)
+                        .closest(".pizza-floors-selected__item")
+                        .replaceWith(templateDefault(pizzaDefaultData));
+                    selectedIdSides = [];
+                    inputSides.val(JSON.stringify(selectedIdSides));
+                    calculate();
+                });
+        };
+
         //Calculate function.
         const calculate = () => {
             let sum = parseFloat( initialPrice );
