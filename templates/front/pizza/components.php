@@ -16,6 +16,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
 
 ?>
 <div class="pizza_components_wrapper" data-pizza="<?php echo $data_attr; ?>" data-price="<?php echo $product_pizza->get_price(); ?>" data-product-id="<?php echo esc_attr(get_the_ID()); ?>">
+    <!-- Components enabled -->
     <?php if ($data['pizza']['enabled']) : ?>
         <!-- Add and remove pizza components. -->
         <div class="pizza-components-block">
@@ -107,6 +108,83 @@ $product_pizza = U_Pizza_Product::get_product($product);
                 </div>
             <?php endif; ?>
         </div>
+    <!-- Dish Enable -->
+    <?php elseif ($data['dish']['enabled']) : ?>
+        <?php if ($data['dish']['tabs']) : ?>
+            <div class="pizza-component-tabs-wrapper">
+                <h3><?php echo apply_filters('u_pizza_extras_text', esc_html('Extras for an additional fee', 'u-pizza')); ?></h3>
+                <ul class="pizza-tab-nav">
+                    <?php $tabs_components = u_pizza_tab_components($product->get_id()); ?>
+                    <?php foreach ($tabs_components as $tab_key => $tab) : ?>
+                        <li>
+                            <a href="" data-tab-id="<?php echo esc_attr($tab['id']); ?>" class="pizza-tab-link<?php echo $tab_key === 1 ? ' active' : ''; ?>" title="<?php echo esc_attr($tab['group_name']); ?>">
+                                <img src="<?php echo esc_url($tab['image']); ?>" alt="">
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="tab-components-wrapper">
+                    <?php foreach ($tabs_components as $tab_key => $tab) : ?>
+                        <div id="<?php echo esc_attr($tab['id']); ?>" class="component-item-tab <?php echo $tab_key === 1 ? 'fade-in' : ''; ?>">
+                            <?php foreach ($tab['components'] as $c) : ?>
+                                <div class="component-item">
+                                    <div class="component-img" style="background-image: url(<?php echo esc_url(wp_get_attachment_image_url($c['imageId'], 'medium')); ?>);background-repeat:no-repeat">
+                                        <div class="component-buttons" data-food-item="<?php echo esc_attr($c['id']); ?>">
+                                            <?php
+                                            u_pizza_woo_quantity_input([
+                                                'input_name' => 'evc_quantity[' . $c['id'] . ']',
+                                                'min_value' => 0,
+                                                'max_value' => 100,
+                                                'classes'      => ['input-text', 'component-qty', 'text'],
+                                                'input_value' => 0
+                                            ]);
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <p><?php echo esc_html($c['name']); ?></p>
+                                    <?php if (!empty($c['weight'])) : ?>
+                                        <p><?php echo esc_html($c['weight']) . '/' . wc_price($c['price']); ?></p>
+                                    <?php else : ?>
+                                        <p><?php echo wc_price($c['price']); ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php else : ?>
+            <div class="pizza-components-wrapper">
+                <h3><?php echo apply_filters('u_pizza_extras_text', esc_html('Extras for an additional fee', 'u-pizza')); ?></h3>
+                <div class="components-item-wrapper">
+                    <?php foreach ($data['dish']['components'] as $c) : ?>
+                        <div class="component-item">
+                            <div class="component-img" style="background-image: url(<?php echo esc_url(wp_get_attachment_image_url($c['imageId'], 'medium')); ?>);background-repeat:no-repeat">
+                                <div class="component-buttons" data-food-item="<?php echo esc_attr($c['id']); ?>">
+                                    <?php
+                                    u_pizza_woo_quantity_input([
+                                        'input_name' => 'evc_quantity[' . $c['id'] . ']',
+                                        'min_value' => 0,
+                                        'max_value' => 100,
+                                        'classes'      => ['input-text', 'component-qty', 'text'],
+                                        'input_value' => 0
+                                    ]);
+                                    ?>
+                                </div>
+                            </div>
+
+                            <p><?php echo esc_html($c['name']); ?></p>
+
+                            <?php if (!empty($c['weight'])) : ?>
+                                <p><?php echo esc_html($c['weight']) . '/' . wc_price($c['price']); ?></p>
+                            <?php else : ?>
+                                <p><?php echo wc_price($c['price']); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 
