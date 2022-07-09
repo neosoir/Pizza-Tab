@@ -84,29 +84,27 @@ class U_Pizza_Cart
                     }
                 }
             }
-            /*
+            
+            // Floor sides.
             if (isset($_POST['pizza-sides-data'])) {
                 $pizza_sides = json_decode(wp_unslash(sanitize_text_field($_POST['pizza-sides-data'])), true);
                 if (!empty($pizza_sides)) {
-
                     foreach ($pizza_sides as $pizza_side) {
-
                         foreach ($product_pizza_data['pizza']['sides']['components'] as $component) {
                             if ((int) $component['id'] === (int) $pizza_side['id']) {
                                 $pizza_config['pizza']['sides'][] = [
-                                    'id' => $component['id'],
-                                    'name' => $component['name'],
-                                    'price' => $component['price'],
-                                    'description' => $component['description'],
-                                    'weight' => $component['weight'],
-                                    'image' => $component['image']
+                                    'id'            =>  $component['id'],
+                                    'name'          =>  $component['name'],
+                                    'price'         =>  $component['price'],
+                                    'description'   =>  $component['description'],
+                                    'weight'        =>  $component['weight'],
+                                    'image'         =>  $component['image']
                                 ];
                             }
                         }
                     }
                 }
             }
-            */
 
             $cart_item_data['u_pizza_config'] = $pizza_config;
 
@@ -173,6 +171,19 @@ class U_Pizza_Cart
                         }
                     }
                 }
+
+                // For sides components
+                if (isset($cart_item['u_pizza_config']['pizza']['sides'])) {
+                    $pizza_sides = $product_pizza_data['pizza']['sides']['components'];
+                    foreach ($cart_item['u_pizza_config']['pizza']['sides'] as $component) {
+                        foreach ($pizza_sides as $side_component) {
+                            if ((int) $component['id'] === (int) $side_component['id']) {
+                                $price +=  floatval($side_component['price']);
+                            }
+                        }
+                    }
+                }
+                
                 $cart_item['data']->set_price( $price );
             }
         }
