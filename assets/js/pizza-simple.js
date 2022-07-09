@@ -309,6 +309,22 @@
                 });
             }
 
+            // calculating dish type with tabs
+            if ($(".pizza-component-tabs-wrapper").length) {
+                $(".tab-components-wrapper .component-item").each(function () {
+                    let val = $(this).find(".component-qty").val();
+                    let componentId = $(this)
+                        .find(".component-buttons")
+                        .attr("data-food-item");
+                    let componentObject = Object.values(
+                        dataComponents.dish.components
+                    ).find((component) => component.id === componentId);
+                    if (componentObject !== undefined) {
+                        sum += parseFloat(componentObject.price) * parseInt(val);
+                    }
+                });
+            }
+
             // Calculate floors part.
             if (floorsEnabled) {
                 let floorsData = selectedIdFloors.filter((el, i) => i !== 0);

@@ -136,4 +136,20 @@
     }
     // To other files can use this function
     window.u_wc_price = u_wc_price;
+
+    // Dish tabs
+    if ($(".pizza-component-tabs-wrapper").length) {
+        $(".pizza-tab-link").on("click", function (e) {
+            e.preventDefault();
+            let tabId = $(this).attr("data-tab-id");
+            $(".component-item-tab").each(function () {
+                $(this).removeClass("fade-in");
+            });
+            $(".pizza-tab-link").each(function () {
+                $(this).removeClass("active");
+            });
+            $(this).addClass("active");
+            $(`#${tabId}`).addClass("fade-in");
+        });
+    }
 })(jQuery);
