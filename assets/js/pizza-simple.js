@@ -51,7 +51,7 @@
                         if (window.matchMedia("(min-width: 768px)").matches) {
                             if (floorFancy.height() > window.innerHeight - 100) {
                                 floorFancy.css("border-width", "0");
-                                $(".pizza-floors-block", floorFancy).slimScroll({
+                                /* $(".pizza-floors-block", floorFancy).slimScroll({
                                     height: window.innerHeight - 100,
                                     railVisible: true,
                                     alwaysVisible: true,
@@ -60,7 +60,7 @@
                                     railColor: "#EAEAEA",
                                     railOpacity: 1,
                                     wheelStep: 5,
-                                });
+                                }); */
                             }
                         } 
                         else {
@@ -108,7 +108,7 @@
                         if (window.matchMedia("(min-width: 768px)").matches) {
                             if (sideFancy.height() > window.innerHeight - 100) {
                                 sideFancy.css("border-width", "0");
-                                $(".pizza-floors-block", sideFancy).slimScroll({
+                                /* $(".pizza-floors-block", sideFancy).slimScroll({
                                     height: window.innerHeight - 100,
                                     railVisible: true,
                                     alwaysVisible: true,
@@ -117,7 +117,7 @@
                                     railColor: "#EAEAEA",
                                     railOpacity: 1,
                                     wheelStep: 5,
-                                });
+                                }); */
                             }
                         } 
                         else {
@@ -313,7 +313,7 @@
                 ).find((el) => el.id == selectedIdSides[0].id);
     
                 if (findSide) {
-                    summ += parseFloat(findSide.price);
+                    sum += parseFloat(findSide.price);
                 }
                 }
             }
@@ -322,13 +322,13 @@
         }
 
         //Refresh prices
-        const refreshPriceHtml = (summ) => {
+        const refreshPriceHtml = (sum) => {
             let priceContainer = $(".product").find(".price");
             let priceFloorContainer = $(document.body).find(".floors-total-price");
 
-            priceContainer.html(u_wc_price(summ));
+            priceContainer.html(u_wc_price(sum));
             if (floorsEnabled || sidesEnabled) {
-                priceFloorContainer.html(u_wc_price(summ));
+                priceFloorContainer.html(u_wc_price(sum));
             }
         };
 

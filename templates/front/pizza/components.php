@@ -17,6 +17,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
 ?>
 <div class="pizza_components_wrapper" data-pizza="<?php echo $data_attr; ?>" data-price="<?php echo $product_pizza->get_price(); ?>" data-product-id="<?php echo esc_attr(get_the_ID()); ?>">
     <?php if ($data['pizza']['enabled']) : ?>
+        <!-- Add and remove pizza components. -->
         <div class="pizza-components-block">
             <div class="pizza-components-nav">
                 <ul>
@@ -25,6 +26,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
                 </ul>
             </div>
             <div class="pizza-components-tabs">
+                <!-- Add Extra components. -->
                 <?php if (!empty($data['pizza']['extra'])) : ?>
                     <div id="add-component" class="pizza-components-tab fade-in">
                         <?php foreach ($data['pizza']['extra'] as $c) : ?>
@@ -51,6 +53,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
+                <!-- Remove Base componenets. -->
                 <?php if (!empty($data['pizza']['base'])) : ?>
                     <div id="remove-component" class="pizza-components-tab">
                         <?php
@@ -85,7 +88,9 @@ $product_pizza = U_Pizza_Product::get_product($product);
                 <?php endif; ?>
             </div>
         </div>
+        <!-- Add pizza floors and Slides. -->
         <div class="pizza-components-buttons">
+            <!-- Floors. -->
             <?php if ($data['pizza']['floors']['enabled']) : ?>
                 <input type="hidden" name="pizza-floors-data" value="">
                 <button class="u-pizza-button" id="pizza-floor-button"><?php esc_html_e('Add floor', 'u-pizza'); ?></button>
@@ -93,6 +98,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
                     <?php wc_get_template('pizza/floors.php', ['data' => $data, 'product' => $product], '', U_PIZZA_PATH . 'templates/front/'); ?>
                 </div>
             <?php endif; ?>
+            <!-- Slides. -->
             <?php if ($data['pizza']['sides']['enabled']) : ?>
                 <input type="hidden" name="pizza-sides-data" value="">
                 <button class="u-pizza-button" id="pizza-sides-button"><?php esc_html_e('Choose side', 'u-pizza'); ?></button>
@@ -121,7 +127,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </div>
     </div>
 </script>
-
+<!-- Templating floors default -->
 <script type="text/html" id="tmpl-pizza-floor-default">
     <div class="pizza-floors-selected__item" data-product-id="">
         <a href="#" class="u-remove-floor">
@@ -155,7 +161,7 @@ $product_pizza = U_Pizza_Product::get_product($product);
         </div>
     </div>
 </script>
-
+<!-- Templating sides default -->
 <script type="text/html" id="tmpl-pizza-side-default">
     <div class="pizza-floors-selected__item pizza-sides-selected__item">
         <div class="pizza-floors-left">
