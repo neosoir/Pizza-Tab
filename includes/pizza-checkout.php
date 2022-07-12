@@ -9,19 +9,22 @@ class U_Pizza_Checkout
         add_filter('woocommerce_checkout_cart_item_quantity', [$this, 'display_pizza_type_meta'], 10, 2);
 
         //dispaly order item meta in Thank you page
-        //add_filter('woocommerce_order_item_display_meta_key',  [$this, 'display_meta_key'], 10, 2);
-        //add_filter('woocommerce_order_item_display_meta_value', [$this, 'display_meta_value'], 10, 2);
-        //add_action('woocommerce_order_item_meta_end',   [$this, 'display_meta_thankyou_main'], 10, 3);
-        //add_action('woocommerce_order_item_meta_end',   [$this, 'display_meta_thankyou_extra'], 10, 3);
+        add_filter('woocommerce_order_item_display_meta_key',  [$this, 'display_meta_key'], 10, 2);
+        add_filter('woocommerce_order_item_display_meta_value', [$this, 'display_meta_value'], 10, 2);
+        add_action('woocommerce_order_item_meta_end',   [$this, 'display_meta_thankyou_main'], 10, 3);
+        add_action('woocommerce_order_item_meta_end',   [$this, 'display_meta_thankyou_extra'], 10, 3);
 
         //display order item meta in admin Orders
         //add_action('woocommerce_after_order_itemmeta', [$this, 'display_meta_thankyou_main'], 10, 3);
         //add_action('woocommerce_after_order_itemmeta', [$this, 'display_meta_thankyou_extra'], 10, 3);
 
         //debug order meta
-        add_action('woocommerce_before_thankyou', [$this, 'debug_order'], 10, 1);
+        //add_action('woocommerce_before_thankyou', [$this, 'debug_order'], 10, 1);
     }
 
+    /**
+     * Replace '_u_pizza_config' from Dish type
+     */
     public function display_meta_key($display_key, $meta)
     {
 
@@ -31,10 +34,10 @@ class U_Pizza_Checkout
         }
         return $display_key;
     }
+
     /**
      * Modify display_value for display_meta_thankyou_extra()
      */
-
     public function display_meta_value($value, $meta)
     {
         if ($meta->key === '_u_pizza_config') {
@@ -51,23 +54,17 @@ class U_Pizza_Checkout
         }
         return $value;
     }
-    public function debug_order($order_id)
-    {
-        $order = wc_get_order($order_id);
-        foreach ($order->get_items() as $item_id => $order_item) {
-            $meta_data = $order_item->get_meta_data();
-            echo "<pre>";
-            print_r($meta_data);
 
-            echo '</pre>';
-        }
-    }
     public function add_meta_to_order($order_item, $cart_item_key, $cart_item_data, $order)
     {
         if (isset($cart_item_data['u_pizza_config'])) {
             $order_item->update_meta_data('_u_pizza_config', wc_clean($cart_item_data['u_pizza_config']));
         }
     }
+
+    /**
+     * Display Dish type info.
+     */
     public function display_meta_thankyou_extra($item_id, $item, $order)
     {
         if (!u_is_pizza_product($item->get_data()['product_id'])) {
@@ -133,6 +130,10 @@ class U_Pizza_Checkout
             return wp_kses_post($html);
         }
     }
+
+    /**
+     * Display Pizza type info.
+     */
     public function display_meta_thankyou_main($item_id, $item, $order)
     {
         if (!u_is_pizza_product($item->get_data()['product_id'])) {
@@ -251,5 +252,20 @@ class U_Pizza_Checkout
             }
         }
         wc_get_template('cart/u-pizza-meta.php', ['item_data' => $item_data, 'product' => $product, 'key' => $cart_item['key']], '', U_PIZZA_PATH . 'templates/front/');
+    }
+
+    /**
+     * Debug order.
+     */
+    public function debug_order($order_id)
+    {
+        $order = wc_get_order($order_id);
+        foreach ($order->get_items() as $item_id => $order_item) {
+            $meta_data = $order_item->get_meta_data();
+            echo "<pre>";
+            print_r($meta_data);
+
+            echo '</pre>';
+        }
     }
 }
