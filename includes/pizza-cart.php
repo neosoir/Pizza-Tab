@@ -13,8 +13,9 @@ class U_Pizza_Cart
 
         //display meta in fancybox
         add_action('woocommerce_after_cart_item_name', [$this, 'display_cart_meta'], 10, 2);
+
         //displya meta for dish type
-        //add_filter('woocommerce_get_itemz_data', [$this, 'display_meta_cart'], 10, 2);
+        add_filter('woocommerce_get_item_data', [$this, 'display_meta_cart'], 10, 2);
     }
 
     /**
@@ -307,12 +308,35 @@ class U_Pizza_Cart
                         ];
                     }
                 }
-                
+
             }
         }
 
         // Connect file.
         wc_get_template('cart/u-pizza-meta.php', ['item_data' => $item_data, 'product' => $product, 'key' => $cart_item_key], '', U_PIZZA_PATH . 'templates/front/');
+    }
+
+    /**
+     * 
+     */
+    public function display_meta_cart($item_data, $cart_item)
+    {
+        if (isset($cart_item['u_pizza_config'])) {
+
+            if (isset($cart_item['u_pizza_config']['dish']['components'])) {
+
+                foreach ($cart_item['u_pizza_config']['dish']['components'] as $component) {
+                    $item_data[] = [
+                        'key' => $component['name'],
+                        'value' => $component['weight'] !== '' ? 
+                            '<span>' . $component['weight'] . '/' . '</span>' . wc_price($component['price']) . ' x' . $component['quantity'] : wc_price($component['price']) . ' x' . $component['quantity']
+                    ];
+                }
+            }
+        }
+
+
+        return $item_data;
     }
 
 }

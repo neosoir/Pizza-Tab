@@ -63,10 +63,12 @@ class U_Pizza_Install {
         require_once U_PIZZA_PATH . 'includes/pizza.php';
         require_once U_PIZZA_PATH . 'includes/pizza-display.php';
         require_once U_PIZZA_PATH . 'includes/pizza-cart.php';
+        require_once U_PIZZA_PATH . 'includes/pizza-checkout.php';
 
         U_Pizza::instance();
         U_Pizza_Display::instance();
         U_Pizza_Cart::instance();
+        U_Pizza_Checkout::instance();
 
 
     }

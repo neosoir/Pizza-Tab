@@ -10,12 +10,13 @@ if (!defined('ABSPATH')) {
 
 ?>
 
+<!-- Button to display Pizza Type -->
 <div class="pizza-composition-block">
     <div class="pizza-composition-toggle" data-product-id='<?php echo esc_attr($key); ?>'>
         <span><?php echo apply_filters('u_pizza_composition_text', esc_html(__('Pizza composition', 'u-pizza')), $product->get_id()); ?></span>
     </div>
-
 </div>
+<!--Display Pizza Type -->
 <div id="u-pizza-<?php echo esc_attr($key); ?>" class="u-pizza-fancy-ingredients" style="display: none;">
     <ul>
         <?php if (isset($item_data['pizza']['base'])) : ?>
@@ -34,7 +35,6 @@ if (!defined('ABSPATH')) {
                 <?php endforeach; ?>
             </li>
         <?php endif; ?>
-
         <?php if (isset($item_data['pizza']['floors'])) : ?>
             <li>
                 <strong><?php echo esc_html($item_data['pizza']['floor_text']); ?></strong>
