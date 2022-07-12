@@ -2,7 +2,8 @@
 
 if ($product->is_type('simple')) {
     wp_enqueue_script('pizza-simple');
-} elseif ($product->is_type('variable')) {
+} 
+elseif ($product->is_type('variable')) {
     wp_enqueue_script('pizza-variable');
 }
 

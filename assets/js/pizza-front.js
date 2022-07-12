@@ -121,6 +121,8 @@
     let symbol              = PIZZA_FRONT_DATA.wc_symbol,
         pricePosition       = PIZZA_FRONT_DATA.price_position,
         wcDecimals          = PIZZA_FRONT_DATA.decimals || 2;
+
+    // Format price.
     const u_wc_price = (price) => {
         //recreating wc_price() function
         switch (pricePosition) {
@@ -134,8 +136,31 @@
                 return `${price.toFixed(wcDecimals)} ${symbol}`;
         }
     }
+
+    // Format sales price.
+    const u_wc_price_sale = (price, regular_price) => {
+        switch (pricePosition) {
+        case "left":
+            return `<del>${symbol}${regular_price.toFixed(
+            wcDecimals
+            )}</del><ins>${symbol}${price.toFixed(wcDecimals)}</ins>`;
+        case "right":
+            return `<del>${regular_price.toFixed(
+            wcDecimals
+            )}${symbol}</del><ins>${price.toFixed(wcDecimals)}${symbol}</ins>`;
+        case "left_space":
+            return `<del>${symbol} ${regular_price.toFixed(
+            wcDecimals
+            )}</del><ins>${symbol} ${price.toFixed(wcDecimals)}</ins>`;
+        case "right_space":
+            return `<del>${regular_price.toFixed(
+            wcDecimals
+            )} ${symbol}</del><ins>${price.toFixed(wcDecimals)} ${symbol}</ins>`;
+        }
+    };
     // To other files can use this function
     window.u_wc_price = u_wc_price;
+    window.u_wc_price_sale = u_wc_price_sale;
 
     // Dish tabs
     if ($(".pizza-component-tabs-wrapper").length) {

@@ -205,7 +205,10 @@ class U_Pizza_Display {
             'price_position'        =>  get_option('woocommerce_currency_pos'),
             'decimals'              =>  wc_get_price_decimals(),
         ]);
+
+        // Register for simple and variable product.
         wp_register_script( 'pizza-simple', plugins_url( 'assets/js/pizza-simple.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
+        wp_register_script( 'pizza-variable', plugins_url( 'assets/js/pizza-variable.js', U_PIZZA_DIR ), ['jquery', 'wp-util'], time(), true );
     }
 
     /**
