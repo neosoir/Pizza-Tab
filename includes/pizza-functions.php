@@ -209,12 +209,12 @@ function u_pizza_get_image_placeholder($image)
 /**
  * Check if tipps enabled
  */
-/* function u_pizza_tipps_enabled()
+function u_pizza_tipps_enabled()
 {
     $tipps_enabled = get_option('pizza_tipps');
     if (!$tipps_enabled) {
         return false;
     }
     return $tipps_enabled === 'yes' ? true : false;
-} */
+}
 

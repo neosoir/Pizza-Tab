@@ -13,11 +13,11 @@ echo '</pre>'; */
 <div id="u-pizza-settings">
     <?php
     woocommerce_wp_checkbox([
-        'id' => 'pizza_tipps', // also as name attr
-        'label' => __('Enable tipps'),
-        'value' => get_option('pizza_tipps'),
-        'description' => __('Show tippy icon in every element that have description content'),
-        'desc_tip' => true
+        'id'            => 'pizza_tipps', // also as name attr
+        'label'         => __('Enable tipps'),
+        'value'         => get_option('pizza_tipps'),
+        'description'   => __('Show tippy icon in every element that have description content'),
+        'desc_tip'      => true
     ]);
     ?>
     <div class="wc-metaboxes-wrapper">

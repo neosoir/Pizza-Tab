@@ -104,12 +104,30 @@
         });
     });
 
-    ///slimscroll on Tabs
-    $(".pizza-components-tab").each(function () {
-        if (window.matchMedia("(min-width: 990px)").matches) {
-            if ($(this).height() > 450) {
-                $(this).css("padding-right", "25px");
-                $(this).slimScroll({
+    // Funcion to slimScroll
+    if ( $(".pizza_components_wrapper").length ) {
+        //components tabs
+        $(".pizza-components-nav").on("click", "a", function (e) {
+        e.preventDefault();
+        $(".pizza-components-tab").each(function () {
+            $(this).removeClass("fade-in");
+    
+            $(this)
+            .parents(".slimScrollDiv")
+    
+            .height(0);
+        });
+        $(".pizza-components-nav a").each(function () {
+            $(this).removeClass("active");
+        });
+        $(this).addClass("active");
+    
+        $(`${e.target.hash}`).addClass("fade-in");
+        if ($(`${e.target.hash}`).height() > 450) {
+            if (!$(`${e.target.hash}`).parents(".slimScrollDiv").length) {
+            if (window.matchMedia("(min-width: 990px)").matches) {
+                $(`${e.target.hash}`).css("padding-right", "25px");
+                $(`${e.target.hash}`).slimScroll({
                 height: 450,
                 railVisible: true,
                 alwaysVisible: true,
@@ -120,37 +138,62 @@
                 wheelStep: 5,
                 });
             }
-        } 
-        else {
+            }
+        }
+        $(`${e.target.hash}`)
+            .parents(".slimScrollDiv")
+    
+            .height(450);
+        });
+        ///slimscroll on Tabs
+        $(".pizza-components-tab").each(function () {
+        if (window.matchMedia("(min-width: 990px)").matches) {
+            if ($(this).height() > 450) {
+            $(this).css("padding-right", "25px");
+            $(this).slimScroll({
+                height: 450,
+                railVisible: true,
+                alwaysVisible: true,
+                size: "6px",
+                color: "#FF0329",
+                railColor: "#EAEAEA",
+                railOpacity: 1,
+                wheelStep: 5,
+            });
+            }
+        } else {
             $(this).slick({
-                // centerMode: true,
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                arrows: false,
-                infinite: false,
-                responsive: [
+            // centerMode: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: false,
+            infinite: false,
+            responsive: [
                 {
-                    breakpoint: 767,
-                    settings: {
+                breakpoint: 767,
+                settings: {
                     slidesToShow: 4,
-                    },
+                },
                 },
                 {
-                    breakpoint: 500,
-                    settings: {
+                breakpoint: 500,
+                settings: {
                     slidesToShow: 3,
-                    },
+                },
                 },
                 {
-                    breakpoint: 380,
-                    settings: {
+                breakpoint: 380,
+                settings: {
                     slidesToShow: 2,
-                    },
                 },
-                ],
+                },
+            ],
             });
         }
-    });
+        });
+    
+        tippy("[data-tippy-content]");
+    }
 
     // Formating price 
     let symbol              = PIZZA_FRONT_DATA.wc_symbol,

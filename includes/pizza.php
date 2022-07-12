@@ -72,6 +72,7 @@ class U_Pizza {
             }
         }
         update_option( 'u_pizza_data',  wc_clean( $_POST['pizza_data'] ) );
+        update_option('pizza_tipps', isset($_POST['pizza_tipps']) ? 'yes' : 'no');
         
     }
 

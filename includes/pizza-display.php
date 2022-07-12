@@ -191,6 +191,10 @@ class U_Pizza_Display {
     public function enqueue()
     {
         // Libaries
+        if (is_product() && u_pizza_tipps_enabled()) {
+            wp_enqueue_script('pizza-popper', plugins_url('assets/js/popper.min.js', U_PIZZA_DIR), [], '2.11.0', true);
+            wp_enqueue_script('pizza-tipps', plugins_url('assets/js/tippy.min.js', U_PIZZA_DIR), [], '6.3.7', true);
+        }
         if (is_product()) {
             wp_enqueue_script('pizza-slimscroller', plugins_url('assets/js/jquery.slimscroll.min.js', U_PIZZA_DIR), ['jquery'], '1.3.8', true);
             wp_enqueue_style('pizza-slick', plugins_url('assets/css/slick.css', U_PIZZA_DIR), [], '1.8.1', 'all');
