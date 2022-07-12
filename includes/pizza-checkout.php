@@ -15,8 +15,8 @@ class U_Pizza_Checkout
         add_action('woocommerce_order_item_meta_end',   [$this, 'display_meta_thankyou_extra'], 10, 3);
 
         //display order item meta in admin Orders
-        //add_action('woocommerce_after_order_itemmeta', [$this, 'display_meta_thankyou_main'], 10, 3);
-        //add_action('woocommerce_after_order_itemmeta', [$this, 'display_meta_thankyou_extra'], 10, 3);
+        add_action('woocommerce_after_order_itemmeta', [$this, 'display_meta_thankyou_main'], 10, 3);
+        add_action('woocommerce_after_order_itemmeta', [$this, 'display_meta_thankyou_extra'], 10, 3);
 
         //debug order meta
         //add_action('woocommerce_before_thankyou', [$this, 'debug_order'], 10, 1);
@@ -197,6 +197,10 @@ class U_Pizza_Checkout
             wc_get_template('cart/u-pizza-meta.php', ['product' => $product, 'item_data' => $item_data, 'key' => $item_id], '', U_PIZZA_PATH . 'templates/front/');
         }
     }
+
+    /**
+     * Add meta of product type.
+     */
     public function display_pizza_type_meta($html, $cart_item)
     {
         $item_data = [];

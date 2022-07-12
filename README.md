@@ -12,5 +12,9 @@
 * [Plugin Handbook](https://developer.wordpress.org/plugins/)
 * [WooCommerce Plugin Developer Handbook](https://woocommerce.com/document/create-a-plugin/)
 
+## Hacks
+
+* [wp_add_inline_script](https://developer.wordpress.org/reference/functions/wp_add_inline_script/)
+
 
 
