@@ -104,17 +104,52 @@
         });
     });
 
-    //components tabs
-    $(".pizza-components-nav").on("click", "a", function (e) {
-        e.preventDefault();
-        $(".pizza-components-tab").each(function () {
-            $(this).removeClass("fade-in");
-        });
-        $(".pizza-components-nav a").each(function () {
-            $(this).removeClass("active");
-        });
-        $(this).addClass("active");
-        $(`${e.target.hash}`).addClass("fade-in");
+    ///slimscroll on Tabs
+    $(".pizza-components-tab").each(function () {
+        if (window.matchMedia("(min-width: 990px)").matches) {
+            if ($(this).height() > 450) {
+                $(this).css("padding-right", "25px");
+                $(this).slimScroll({
+                height: 450,
+                railVisible: true,
+                alwaysVisible: true,
+                size: "6px",
+                color: "#FF0329",
+                railColor: "#EAEAEA",
+                railOpacity: 1,
+                wheelStep: 5,
+                });
+            }
+        } 
+        else {
+            $(this).slick({
+                // centerMode: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: false,
+                infinite: false,
+                responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                    slidesToShow: 4,
+                    },
+                },
+                {
+                    breakpoint: 500,
+                    settings: {
+                    slidesToShow: 3,
+                    },
+                },
+                {
+                    breakpoint: 380,
+                    settings: {
+                    slidesToShow: 2,
+                    },
+                },
+                ],
+            });
+        }
     });
 
     // Formating price 
