@@ -6,6 +6,7 @@
 * [wp.template](https://codex.wordpress.org/Javascript_Reference/wp.template)
 * [Select2](https://select2.org/)
 * [selectWoo](https://developer.woocommerce.com/2017/08/08/selectwoo-an-accessible-replacement-for-select2/)
+* [slimScroll](https://github.com/rochal/jQuery-slimScroll)
 
 ## Sources
 

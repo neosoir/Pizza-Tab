@@ -51,7 +51,7 @@
                         if (window.matchMedia("(min-width: 768px)").matches) {
                             if (floorFancy.height() > window.innerHeight - 100) {
                                 floorFancy.css("border-width", "0");
-                                /* $(".pizza-floors-block", floorFancy).slimScroll({
+                                $(".pizza-floors-block", floorFancy).slimScroll({
                                     height: window.innerHeight - 100,
                                     railVisible: true,
                                     alwaysVisible: true,
@@ -60,7 +60,7 @@
                                     railColor: "#EAEAEA",
                                     railOpacity: 1,
                                     wheelStep: 5,
-                                }); */
+                                });
                             }
                         } 
                         else {
@@ -108,7 +108,7 @@
                         if (window.matchMedia("(min-width: 768px)").matches) {
                             if (sideFancy.height() > window.innerHeight - 100) {
                                 sideFancy.css("border-width", "0");
-                                /* $(".pizza-floors-block", sideFancy).slimScroll({
+                                $(".pizza-floors-block", sideFancy).slimScroll({
                                     height: window.innerHeight - 100,
                                     railVisible: true,
                                     alwaysVisible: true,
@@ -117,7 +117,7 @@
                                     railColor: "#EAEAEA",
                                     railOpacity: 1,
                                     wheelStep: 5,
-                                }); */
+                                });
                             }
                         } 
                         else {

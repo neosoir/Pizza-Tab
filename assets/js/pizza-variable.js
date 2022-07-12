@@ -96,7 +96,7 @@
                 if (window.matchMedia("(min-width: 768px)").matches) {
                     if (floorFancy.height() > window.innerHeight - 100) {
                     floorFancy.css("border-width", "0");
-                    /* $(".pizza-floors-block", floorFancy).slimScroll({
+                    $(".pizza-floors-block", floorFancy).slimScroll({
                         height: window.innerHeight - 100,
                         railVisible: true,
                         alwaysVisible: true,
@@ -105,7 +105,7 @@
                         railColor: "#EAEAEA",
                         railOpacity: 1,
                         wheelStep: 5,
-                    }); */
+                    });
                     }
                 } else {
                     $(".pizza-floors-block", floorFancy).slick({
@@ -153,17 +153,17 @@
                 let sideFancy = $(document.body).find("#u-pizza-sides-fancybox");
                 if (window.matchMedia("(min-width: 768px)").matches) {
                     if (sideFancy.height() > window.innerHeight - 100) {
-                    sideFancy.css("border-width", "0");
-                    /* $(".pizza-floors-block", sideFancy).slimScroll({
-                        height: window.innerHeight - 100,
-                        railVisible: true,
-                        alwaysVisible: true,
-                        size: "6px",
-                        color: "#FF0329",
-                        railColor: "#EAEAEA",
-                        railOpacity: 1,
-                        wheelStep: 5,
-                    }); */
+                        sideFancy.css("border-width", "0");
+                        $(".pizza-floors-block", sideFancy).slimScroll({
+                            height: window.innerHeight - 100,
+                            railVisible: true,
+                            alwaysVisible: true,
+                            size: "6px",
+                            color: "#FF0329",
+                            railColor: "#EAEAEA",
+                            railOpacity: 1,
+                            wheelStep: 5,
+                        });
                     }
                 } else {
                     $(".pizza-floors-block", sideFancy).slick({
