@@ -9,13 +9,15 @@ class U_Pizza_Cart
         add_action('woocommerce_before_calculate_totals', [$this, 'calculate_totals'], 10, 1);
         add_filter('woocommerce_get_cart_item_from_session', [$this, 'get_cart_data_from_session'], 10, 3);
 
-        //add_action('woocommerce_before_calculate_totals', [$this, 'debug_cart'], 20, 1);
-
-        //display meta in fancybox
+        //display meta in fancybox.
         add_action('woocommerce_after_cart_item_name', [$this, 'display_cart_meta'], 10, 2);
 
-        //displya meta for dish type
+        //displya meta for dish type.
         add_filter('woocommerce_get_item_data', [$this, 'display_meta_cart'], 10, 2);
+
+        // Debug function.
+        //add_action('woocommerce_before_calculate_totals', [$this, 'debug_cart'], 20, 1);
+
     }
 
     /**
