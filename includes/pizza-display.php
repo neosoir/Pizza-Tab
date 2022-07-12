@@ -16,6 +16,9 @@ class U_Pizza_Display {
         // update price in mini cart
         add_filter('woocommerce_cart_item_price', [$this, 'modify_price_mini_cart'], 10, 3);
 
+        // Modify varible variation.
+        add_filter('woocommerce_available_variation', [$this, 'modify_attr_array'], 10, 3);
+
     }
 
     /**
@@ -44,12 +47,12 @@ class U_Pizza_Display {
             return $price;
         }
         $product_pizza = U_Pizza_Product::get_product($product);
+
         ///simple prices
         if ($product->is_type('simple')) {
             if ($product_pizza->is_on_sale()) {
                 $price = wc_format_sale_price(wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_regular_price()]), wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()])) . $product_pizza->get_price_suffix();
             } 
-            
             else {
                 $price = wc_price(wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()])) .  $product_pizza->get_price_suffix();
             }
@@ -58,11 +61,9 @@ class U_Pizza_Display {
         ///variable prices
         elseif ($product->is_type('variable')) {
             $prices = $product->get_variation_prices();
-
             if (empty($prices['price'])) {
                 $price = apply_filters('woocommerce_variable_empty_price_html', '', $product);
             } 
-            
             else {
                 $min_price     = $product_pizza->get_price(current($prices['price']));
                 $max_price     = $product_pizza->get_price(end($prices['price']));
@@ -76,16 +77,15 @@ class U_Pizza_Display {
                 } else {
                     $price = wc_price($min_price);
                 }
-
                 $price = apply_filters('woocommerce_variable_price_html', $price . $product_pizza->get_price_suffix(), $product);
             }
         } 
         
+        // variations price.
         elseif ($product->is_type('variation')) {
             if ($product_pizza->is_on_sale()) {
                 $price = wc_format_sale_price(wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_regular_price()]), wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()])) . $product_pizza->get_price_suffix();
             } 
-            
             else {
                 $price = wc_price(wc_get_price_to_display($product_pizza->get_wc_product(), ['price' => $product_pizza->get_price()])) .  $product_pizza->get_price_suffix();
             }
@@ -230,4 +230,17 @@ class U_Pizza_Display {
         }
     } 
 
+    /**
+     * Set prices for variation product types in form.cart attributes
+     */
+    public function modify_attr_array($data, $product_variable, $variation)
+    {
+        if (!u_is_pizza_product($product_variable->get_id())) {
+            return $data;
+        }
+        $product_pizza = U_Pizza_Product::get_product($product_variable);
+        $data['display_price']          =   wc_get_price_to_display($variation, ['price' => $product_pizza->get_price($variation->get_price())]);
+        $data['display_regular_price']  =   wc_get_price_to_display($variation, ['price' => $product_pizza->get_price($variation->get_regular_price())]);
+        return $data;
+    }
 }
