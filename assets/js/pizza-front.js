@@ -152,4 +152,12 @@
             $(`#${tabId}`).addClass("fade-in");
         });
     }
+    // Handle fancybox for cart meta
+    $(document.body).on("click", ".pizza-composition-toggle", function () {
+        $.fancybox.open({
+        src: `#u-pizza-${$(this).attr("data-product-id")}`,
+        type: "inline",
+        touch: false,
+        });
+    });
 })(jQuery);

@@ -11,6 +11,10 @@ class U_Pizza_Cart
 
         //add_action('woocommerce_before_calculate_totals', [$this, 'debug_cart'], 20, 1);
 
+        //display meta in fancybox
+        add_action('woocommerce_after_cart_item_name', [$this, 'display_cart_meta'], 10, 2);
+        //displya meta for dish type
+        //add_filter('woocommerce_get_itemz_data', [$this, 'display_meta_cart'], 10, 2);
     }
 
     /**
@@ -241,6 +245,74 @@ class U_Pizza_Cart
         echo "<pre>";
         print_r($cart);
         echo "</pre>";
+    }
+
+    /**
+     * Display product pizza data in cart
+     */
+    public function display_cart_meta($cart_item, $cart_item_key)
+    {
+        $item_data      =   [];
+        $product_id     =   $cart_item['data']->get_parent_id() ? $cart_item['data']->get_parent_id() : $cart_item['data']->get_id();
+        $product        =   wc_get_product($product_id);
+
+
+        if (u_is_pizza_product($product_id)) {
+            if (isset($cart_item['u_pizza_config'])) {
+
+                //This fancybox only for pizza type
+                if (isset($cart_item['u_pizza_config']['dish'])) {
+                    return false;
+                }
+
+                if (isset($cart_item['u_pizza_config']['pizza']['extra'])) {
+
+                    $item_data['pizza']['extra_text'] = apply_filters('u_pizza_components_adds_text', esc_html__('Components extra:', 'u-pizza'), $cart_item['data']->get_id());
+                    foreach ($cart_item['u_pizza_config']['pizza']['extra'] as $component) {
+                        $item_data['pizza']['extra'][] = [
+                            'key' => $component['name'],
+                            'value' => $component['weight'] !== '' ? '<span>' . $component['weight'] . '/' . '</span>' . wc_price($component['price']) . '<span class="pizza-quantity-badge">' . ' x' . $component['quantity'] . '</span>' : wc_price($component['price']) . '<span class="pizza-quantity-badge">' . ' x' . $component['quantity'] . '</span>'
+                        ];
+                    }
+                }
+
+                if (isset($cart_item['u_pizza_config']['pizza']['base'])) {
+                    $item_data['pizza']['base_text'] = apply_filters('u_pizza_components_base_text', esc_html__('Base Components:', 'u-pizza'), $cart_item['data']->get_id());
+                    foreach ($cart_item['u_pizza_config']['pizza']['base'] as $component) {
+                        $item_data['pizza']['base'][] = [
+                            'key' => $component['name'],
+                            'value' => $component['weight'] !== '' ? '<span>' . $component['weight'] . '/' . '</span>' . wc_price($component['price']) : wc_price($component['price'])
+                        ];
+                    }
+                }
+
+                if (isset($cart_item['u_pizza_config']['pizza']['floors'])) {
+                    $item_data['pizza']['floor_text'] = apply_filters('u_pizza_components_floors_text', esc_html__('Floors:', 'u-pizza'), $cart_item['data']->get_id());
+                    foreach ($cart_item['u_pizza_config']['pizza']['floors'] as $component) {
+
+                        $item_data['pizza']['floors'][] = [
+                            'key' => $component['name'],
+                            'value' => wc_price($component['price'])
+                        ];
+                    }
+                }
+                
+                if (isset($cart_item['u_pizza_config']['pizza']['sides'])) {
+                    $item_data['pizza']['side_text'] = apply_filters('u_pizza_components_side_text', esc_html__('Side:', 'u-pizza'), $cart_item['data']->get_id());
+                    foreach ($cart_item['u_pizza_config']['pizza']['sides'] as $component) {
+
+                        $item_data['pizza']['sides'][] = [
+                            'key' => $component['name'],
+                            'value' => wc_price($component['price'])
+                        ];
+                    }
+                }
+                
+            }
+        }
+
+        // Connect file.
+        wc_get_template('cart/u-pizza-meta.php', ['item_data' => $item_data, 'product' => $product, 'key' => $cart_item_key], '', U_PIZZA_PATH . 'templates/front/');
     }
 
 }
