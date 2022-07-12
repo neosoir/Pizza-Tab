@@ -9,6 +9,13 @@ defined('ABSPATH') || exit;
 ?>
 
 <div class="pizza-fancybox-floors">
+    <div class="pizza-floors-selected__footermobile">
+        <div class="u_pizza_total">
+            <span class="floors-total"><?php esc_html_e('Total:', 'u-pizza'); ?></span>
+            <span class="floors-total-price"><?php echo wp_kses_post($product->get_price_html()); ?></span>
+        </div>
+        <button class="u-pizza-button choose-floor-button"><?php echo apply_filters('u_pizza_add_floor_button', esc_html(__('Choose', 'u-pizza'))); ?></button>
+    </div>
     <div class="pizza-floors-block">
         <?php foreach ($data['pizza']['floors']['components'] as $product_id) : ?>
             <?php $inner_product = wc_get_product($product_id); ?>

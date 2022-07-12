@@ -743,7 +743,8 @@ form.cart .component-buttons input[type=number]::-webkit-outer-spin-button {
     flex:0 0 63%
 }
 .pizza-fancybox-sides .pizza-floor-item img {
-    max-width:150px
+    max-width:150px;
+    width: 100%;
 }
 .pizza-fancybox-sides .pizza-floor-item>p {
     margin:0

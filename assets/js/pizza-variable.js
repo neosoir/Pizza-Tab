@@ -107,25 +107,26 @@
                         wheelStep: 5,
                     });
                     }
-                } else {
+                } 
+                else {
                     $(".pizza-floors-block", floorFancy).slick({
-                    slidesToShow: 4,
-                    infinite: false,
-                    arrows: false,
-                    responsive: [
-                        {
-                        breakpoint: 500,
-                        settings: {
-                            slidesToShow: 3,
-                        },
-                        },
-                        {
-                        breakpoint: 380,
-                        settings: {
-                            slidesToShow: 2,
-                        },
-                        },
-                    ],
+                        slidesToShow: 4,
+                        infinite: false,
+                        arrows: false,
+                        responsive: [
+                            {
+                                breakpoint: 500,
+                                settings: {
+                                    slidesToShow: 3,
+                                },
+                            },
+                            {
+                                breakpoint: 380,
+                                settings: {
+                                    slidesToShow: 2,
+                                },
+                            },
+                        ],
                     });
                 }
                 },
@@ -144,50 +145,51 @@
             return;
             }
             $.fancybox.open({
-            src: "#u-pizza-sides-fancybox",
-            type: "inline",
-            touch: false,
-            opts: {
-                afterShow: function (instance, current) {
-                // console.info("done!");
-                let sideFancy = $(document.body).find("#u-pizza-sides-fancybox");
-                if (window.matchMedia("(min-width: 768px)").matches) {
-                    if (sideFancy.height() > window.innerHeight - 100) {
-                        sideFancy.css("border-width", "0");
-                        $(".pizza-floors-block", sideFancy).slimScroll({
-                            height: window.innerHeight - 100,
-                            railVisible: true,
-                            alwaysVisible: true,
-                            size: "6px",
-                            color: "#FF0329",
-                            railColor: "#EAEAEA",
-                            railOpacity: 1,
-                            wheelStep: 5,
+                src: "#u-pizza-sides-fancybox",
+                type: "inline",
+                touch: false,
+                opts: {
+                    afterShow: function (instance, current) {
+                    // console.info("done!");
+                    let sideFancy = $(document.body).find("#u-pizza-sides-fancybox");
+                    if (window.matchMedia("(min-width: 768px)").matches) {
+                        if (sideFancy.height() > window.innerHeight - 100) {
+                            sideFancy.css("border-width", "0");
+                            $(".pizza-floors-block", sideFancy).slimScroll({
+                                height: window.innerHeight - 100,
+                                railVisible: true,
+                                alwaysVisible: true,
+                                size: "6px",
+                                color: "#FF0329",
+                                railColor: "#EAEAEA",
+                                railOpacity: 1,
+                                wheelStep: 5,
+                            });
+                        }
+                    } 
+                    else {
+                        $(".pizza-floors-block", sideFancy).slick({
+                            slidesToShow: 4,
+                            infinite: false,
+                            arrows: false,
+                            responsive: [
+                                {
+                                    breakpoint: 500,
+                                    settings: {
+                                        slidesToShow: 3,
+                                    },
+                                },
+                                {
+                                    breakpoint: 380,
+                                    settings: {
+                                        slidesToShow: 2,
+                                    },
+                                },
+                            ],
                         });
                     }
-                } else {
-                    $(".pizza-floors-block", sideFancy).slick({
-                    slidesToShow: 4,
-                    infinite: false,
-                    arrows: false,
-                    responsive: [
-                        {
-                        breakpoint: 500,
-                        settings: {
-                            slidesToShow: 3,
-                        },
-                        },
-                        {
-                        breakpoint: 380,
-                        settings: {
-                            slidesToShow: 2,
-                        },
-                        },
-                    ],
-                    });
-                }
+                    },
                 },
-            },
             });
             templateUSides();
             $(".choose-floor-button").on("click", function (e) {
